@@ -1,0 +1,13 @@
+{
+    "_id": "ID",
+    "title": "Content Name",
+    "description": "Content Description",
+    "language": "Content Language",
+    "content": "Course Content",
+    "glossary": "Glossary",
+    "recordStatus": "Status of the content (active/inactive)",
+    "createdOn": "Current Timestamp",
+    "createdBy": "Creator (contentadmin/admin)",
+    "modifiedOn": "Current Timestamp",    
+    "modifiedBy": "Modifier (contentadmin/admin)"
+}

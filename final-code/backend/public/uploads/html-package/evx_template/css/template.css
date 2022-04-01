@@ -1,0 +1,18 @@
+html, body {padding: 0; margin: 0; overflow: hidden;}
+#container {width: 1366px; height: 650px; position: relative; border: 1px solid rgba(204, 204, 204, 1); font-family: "Gotham", 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif; margin: 0 auto; box-sizing: border-box;}
+.header1 {position: relative; width: 100%; height: 88px; background: url('../assets/images/template/header-panel01.png') no-repeat; }
+.header1::after {position: absolute; content: ''; width: 100%; height: 39px; left: 0; background-color: #122c51; top: 48px;}
+.logo {position: relative; background: url('../assets/images/template/logo.png') no-repeat; height: 88px; width: 225px; z-index: 1; float: left;}
+.course-title {color: #fff; line-height: 48px; font-size: 20px; float: left; margin: 0 20px; width: 989px;}
+.header-btn-container {float: left;}
+.help-icon {float: left; position: relative; cursor: pointer; background: url('../assets/images/template/help-icon.png') 50% 50% no-repeat; width: 55px; height: 48px;}
+.help-icon::after {position: absolute; content: ''; background-color: #49a4ff; height: 42px; left: 55px; top: 0px; width: 1px;}
+.exit-icon {float: left; position: relative; cursor: pointer; background: url('../assets/images/template/close-icon.png') 50% 50% no-repeat; width: 55px; height: 48px;}
+.header2 {width: 100%; background: url('../assets/images/template/header-panel02.png') no-repeat; position: relative; height: 51px; top: -1px; }
+.nav-icon {float: left; cursor: pointer;}
+.home-icon {background: url('../assets/images/template/home-icon.png') no-repeat; width: 27px; height: 23px; margin: 10px 0 10px 45px;}
+.back-icon {background: url('../assets/images/template/arrow-icon.png') no-repeat; width: 28px; height: 19px; margin: 12px 0 12px 30px;}
+.next-icon {background: url('../assets/images/template/arrow-icon.png') no-repeat; width: 28px; height: 19px; margin: 12px 0 12px 26px; transform: rotateZ(180deg);}
+.nav-btn-disble {background-position: -28px 0; cursor: default !important;}
+.content {position: relative; width: 100%; height: 530px; overflow: hidden; background: url(../assets/images/template/page-bg.png) no-repeat; z-index: 2; background-position: 0; top: -21px;}
+#page-content {width: 100%; height: 530px; position: relative; overflow: hidden; border: 0;}

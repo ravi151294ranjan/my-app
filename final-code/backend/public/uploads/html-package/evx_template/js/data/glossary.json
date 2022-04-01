@@ -1,0 +1,41 @@
+{
+  "title": "Glossary",
+  "glossary": [
+    {
+      "keyword": "Accessibility",
+      "definition": "Web Accessibility refers to best practices for keeping a website usable despite physical and technical restrictions."
+    },
+    {
+      "keyword": "Ajax",
+      "definition": "Ajax, which initially stood for Asynchronous JavaScript And XML, is a programming practice of building complex, dynamic webpages using a technology known as XMLHttpRequest."
+    },
+    {
+      "keyword": "Base64",
+      "definition": "Base64 is a group of similar binary-to-text encoding schemes that represent binary data in an ASCII string format by translating it into a radix-64 representation."
+    },
+    {
+      "keyword": "CORS",
+      "definition": "CORS (Cross-Origin Resource Sharing) is a system, consisting of transmitting HTTP headers, that determines whether browsers block frontend JavaScript code from accessing responses for cross-origin requests."
+    },
+    {
+      "keyword": "HTTPS",
+      "definition": "HTTPS (HyperText Transfer Protocol Secure) is an encrypted version of the HTTP protocol. It uses SSL or TLS to encrypt all communication between a client and a server."
+    },
+    {
+      "keyword": "IPv6",
+      "definition": "IPv6 is the current version of the communication protocol underlying the Internet. Slowly IPv6 is replacing IPv4, among other reasons because IPv6 allows for many different IP addresses."
+    },
+    {
+      "keyword": "REST",
+      "definition": "REST (Representational State Transfer) refers to a group of software architecture design constraints that bring about efficient, reliable and scalable distributed systems."
+    },
+    {
+      "keyword": "WebGL",
+      "definition": "WebGL (Web Graphics Library) is a JavaScript API that draws interactive 2D and 3D graphics."
+    },
+    {
+      "keyword": "XHR",
+      "definition": "XMLHttpRequest (XHR) is a JavaScript API to create AJAX requests. Its methods provide the ability to send network requests between the browser and a server."
+    }
+  ]
+}

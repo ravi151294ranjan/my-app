@@ -1,0 +1,67 @@
+<!--Forgot Password Starts-->
+<section id="forgot-password" *ngIf='vFirstLogin== 1'>
+  <div class="container-fluid forgot-password-bg" [formGroup]="changePassword">
+    <div class="row full-height-vh m-0  d-flex align-items-center justify-content-center">
+      <div class="col-md-7 col-sm-12">
+        <div class="card" >
+          <div class="card-content">
+            <div class="card-body fg-image">
+              <div class="row m-0">
+                <div class="col-lg-6 col-md-12 bg-white px-4 pt-3" style="margin-left: 22%;"> 
+                  <!-- class="col-lg-6 col-md-12 bg-white px-4 pt-3" -->
+                  <h4 class="card-title mb-2" style="color: black;">Change Default Password</h4>
+                    <div class="input-group mb-6">
+                    <input type="text" class="form-control" type="password" placeholder="Password" formControlName="password"
+                      aria-label="Recipient's Password"
+                      aria-describedby="basic-addon2">
+                  </div>
+                  <div class="p-1 mb-2 mt-2 text-danger"
+                  *ngIf="changePassword.controls.password.invalid && (changePassword.controls.password.touched || save_clicked)">
+                  <ul>
+                    <li>Password is required</li>
+                    <li>Password contain atleast one letter</li>
+                    <li>Password contain atleast one capital letter</li>
+                    <li>Password contain atleast one number</li>
+                    <li>Password contain atleast one Special character (i.e @ # $ %) </li>
+                    <li>Password contain minimum 8 character</li>
+                    <li>Password contain maximum 35 character</li>
+                  </ul>
+                </div>
+                  <div class="input-group mb-6">
+                  <input type="text" class="form-control" type="password" placeholder="Confirm Password"formControlName="confirmPassword"
+                  aria-label="Recipient's confirm Password"
+                  aria-describedby="basic-addon2">
+                  </div>
+
+                  <div class="p-1 mb-2 mt-2 text-danger" *ngIf="changePassword.controls.password.value != ''">
+                    <div
+                      *ngIf="changePassword.controls.confirmPassword.value == '' && (changePassword.controls.confirmPassword.touched || save_clicked)"
+                      >Confirm Password is required</div>
+                    <div
+                      *ngIf="changePassword.controls.confirmPassword.invalid && changePassword.controls.confirmPassword.value != '' &&  changePassword.controls.confirmPassword.hasError('mismatch')"
+                      >Should not matched confirm password</div>
+                  </div>
+                  <div class="fg-actions d-flex justify-content-between">
+                    <!-- <div class="login-btn">
+                      <button class="btn btn-outline-primary" (click)='loginPage()'>
+                        <a class="text-decoration-none">Back To Login</a>
+                      </button>
+                    </div> -->
+                    <div class="recover-pass">
+                      <button class="btn btn-primary" (click)='changePasswordFirstLogin(changePassword.value, changePassword.valid)'   > 
+                        <a class="text-decoration-none text-white" >
+                          Submit
+                        </a>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!--Forgot Password Ends-->

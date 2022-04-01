@@ -1,0 +1,43 @@
+@use '~@angular/material' as mat;
+// @import "bootstrap/scss/bootstrap";
+// @import "../../../node_modules/bootstrap/scss/functions";
+// @import "../../../node_modules/bootstrap/scss/variables";
+@import '~@angular/material/theming';
+
+// Include the common styles for Angular Material. We include this here so that you only
+// have to load a single css file for Angular Material in your app.
+// Be sure that you only ever include this mixin once!
+@include mat.core;
+
+$matngular-primary: mat.define-palette($mat-indigo);
+$matngular-accent: mat.define-palette($mat-pink, A200, A100, A400);
+
+// The warn palette is optional (defaults to red).
+$matngular-warn: mat.define-palette($mat-red);
+
+// Create the theme object (a Sass map containing all of the palettes).
+$matngular-theme: mat.define-light-theme($matngular-primary, $matngular-accent, $matngular-warn);
+
+@include angular-material-theme($matngular-theme);
+
+@import '~perfect-scrollbar/css/perfect-scrollbar.css';
+@import "scss/variables";
+@import "../../../node_modules/bootstrap/scss/bootstrap";
+@import "~prismjs/plugins/toolbar/prism-toolbar.css";
+@import "~prismjs/themes/prism-okaidia";
+@import "scss/app-variables";
+@import "scss/mixins";
+@import "scss/core/palette";
+@import "scss/custom-bootstrap";
+@import "scss/custom-bootstrap-rtl";
+@import "scss/core";
+@import "scss/fonts/weather-icons";
+@import "scss/plugins";
+@import "scss/demo"; // Remove this SCSS from production
+
+
+.custom-control-input:checked ~ .custom-control-label::before {
+    color: #fff;
+    border-color: #B61111 !important;
+    background-color: #B61111 !important;
+}

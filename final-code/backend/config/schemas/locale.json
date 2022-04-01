@@ -1,0 +1,12 @@
+{
+    "_id": "ID",
+    "name": "Language Name (English)",
+    "language_code": "Language Code (en)",
+    "language_code_identifier": "Language Code Identifier(en_US)",
+    "is_default": "Flag to mark this language as default(true/false)",
+    "recordStatus": "Status of the row (active/inactive)",
+    "createdOn": "Current Timestamp",
+    "createdBy": "Creator (contentadmin/admin)",
+    "modifiedOn": "Current Timestamp",    
+    "modifiedBy": "Modifier(contentadmin/admin)"
+}

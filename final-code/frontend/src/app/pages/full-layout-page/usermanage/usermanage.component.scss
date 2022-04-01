@@ -1,0 +1,202 @@
+
+// * {
+//   font-family: SourceSansPro ;
+// }
+h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
+  font-family: SourceSansPro !important;
+}
+
+
+.ngx-pagination .current {
+    padding: 0.1875rem 0.625rem;
+    background: #fefefe !important;
+    color: #fefefe;
+    cursor: default;
+}
+
+.btn:focus {
+    outline: 0;
+    box-shadow: 0 0 0 0.2rem #1244bb;
+}
+ng-touched{
+    border-color:#1244bb !important
+}
+.success{
+    color: #4abb4a !important;
+}
+.danger{
+    color: #ec7653 !important;
+}
+// .fixed-button {
+//     background-color: #FF2434;
+//     color: #FFFFFF;
+//     border: none;
+//     outline: none;
+//     position: fixed;
+//     bottom: 0px;
+//     right: 15px;
+//     height: 50px;
+//     width: 50px;
+//     margin-bottom: 20px;
+//     border-radius: 30px;
+//     box-shadow: 1px 3px 5px #888888;
+//     z-index: 9999999999999999;
+//   }
+
+
+thead th {
+    cursor: pointer;
+    margin-right: 15px;
+    margin-left: 15px;
+  
+    span {
+      visibility: hidden;
+    }
+  
+    &.active {
+      color: #000;
+  
+      span {
+        visibility: visible;
+      }
+    }
+  }
+
+  .alignleft {
+    float: left;
+  }
+  .alignright {
+    float: right;
+  }
+
+
+
+
+
+  .search-results {
+    height: 100%;
+  }
+
+
+  .choose-file-btn {
+    border: none !important;
+    background-color: #1244bb;
+    color: #fff;
+    border-radius: 0px;
+    // width: 125px;
+    font-weight: 300;
+    font-size: 15px !important;
+    padding: 6px;
+    margin-right: 15px;
+}
+
+.btn-bs-file input[type="file"] {
+  position: absolute;
+  top: -9999999;
+  filter: alpha(opacity=0);
+  opacity: 0;
+  width: 0;
+  height: 0;
+  outline: none;
+  cursor: inherit;
+}
+
+.downloadBtn{
+  // width: 125px;
+  padding: 6px;
+  background-color: #0060f8;
+  border: none;
+  color: #fff;
+  font-size: 15px;
+  margin-left: 15px;
+}
+
+.close-button {
+  height: 35px;
+  width: 35px;
+  border: none;
+  display: inline-block;
+  // padding: 8px 16px;
+  // vertical-align: middle;
+  overflow: hidden;
+  text-decoration: none;
+  color: #fff;
+  background-color: inherit;
+  text-align: center;
+  cursor: pointer;
+  white-space: nowrap;
+  outline: none;;
+  box-shadow: none !important;
+  border-radius: 0px;
+
+    i {
+      margin-left: 8px;
+      font-size: 15px;
+    }
+}
+
+.topright {
+  position: absolute;
+  right: 0;
+  top: 0;
+  background-image: linear-gradient("to left" , rgb(255, 255, 255) 40%, #264373 41%);
+  background-image: -o-linear-gradient("to left" , rgb(255, 255, 255) 50%, #264373 51%);
+  background-image: -moz-linear-gradient("to left" , rgb(255, 255, 255) 50%, #264373 51%);
+  background-image: -webkit-linear-gradient("to left" , rgb(255, 255, 255) 50%, #264373 51%);
+  background-image: -ms-linear-gradient("to left" , rgb(255, 255, 255) 50%, #264373 51%);
+  background-image: -webkit-gradient(
+    linear,
+    left bottom,
+    right top,
+    color-stop(0.5, rgb(255, 255, 255)),
+    color-stop(0.5, #264373)
+  );
+}
+
+.userDetailsDiv {
+  font-size: smaller;
+}
+
+.statusIndicator{
+  width: 8px;
+  height: 8px;
+  position: absolute;
+  border-radius: 50%;
+  margin: 3px;
+}
+
+.faDesigns{
+  margin-left: 10px;cursor: pointer;color: white
+}
+
+.filterDesign{
+  display: inline-block;
+    text-align: left;
+    margin-right: 2vh
+}
+
+::ng-deep ng-select{
+  max-width: 41%;
+}
+
+::ng-deep ng-select .ng-arrow {
+  top: 1vh !important;
+}
+
+::ng-deep ng-select .ng-arrow-wrapper{
+  min-height: inherit;
+  background-color: aliceblue;
+  padding-right: 0px !important;
+}
+
+::ng-deep ng-select.form-control{
+  border: none !important;
+  padding: 0px !important;
+}
+
+.search-title {color: #fff;}
+
+.user-icon {
+  font-size: 25px;
+  color:#fff;
+}

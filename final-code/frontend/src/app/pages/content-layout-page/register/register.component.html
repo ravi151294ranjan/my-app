@@ -1,0 +1,141 @@
+<div style="display: flex;
+flex-wrap: wrap;
+/* margin-right: -15px; */
+margin-left: -15px;">
+  <div class="col-lg-6 col-md-12 align-items-center justify-content-center bg-white px-4 pt-3"
+    style="  margin-left: 25%;  margin-top: 2%;">
+    <form action="" class="form" [formGroup]="addUserForm">
+      <h4 class="card-title mb-2">Register</h4>
+      <div class="modal-body">
+        <div class="form-body">
+          <div class="row">
+            <div class="form-group col-md-6 mb-2">
+              <label for="projectinput1">First Name</label><span style="color: red;">*</span>
+              <input type="text" id="projectinput1" class="form-control" formControlName="firstname"
+                placeholder="First Name">
+              <div class="p-1 mb-2 mt-2 text-danger"
+                *ngIf="addUserForm.controls.firstname.invalid && (addUserForm.controls.firstname.touched || save_clicked)">
+                First Name is required</div>
+            </div>
+            <div class="form-group col-md-6 mb-2">
+              <label for="projectinput2">Last Name</label><span style="color: red;">*</span>
+              <input type="text" id="projectinput2" class="form-control" formControlName="lastname"
+                placeholder="Last Name">
+              <div class="p-1 mb-2 mt-2 text-danger"
+                *ngIf="addUserForm.controls.lastname.invalid && (addUserForm.controls.lastname.touched || save_clicked)">
+                Last Name is required</div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="form-group col-md-6 mb-2">
+              <label for="projectinput3">E-mail</label><span style="color: red;">*</span>
+
+              <div class="input-group mb-3">
+                <input type="text" class="form-control" formControlName="email" placeholder="E-mail"
+                  aria-label="Recipient's username" aria-describedby="basic-addon2">
+                <!-- <div class="input-group-append">
+                  <span class="input-group-text" id="basic-addon2">{{tenantPreFix}}</span>
+                </div> -->
+              </div>
+
+              <div class="p-1 mb-2 mt-2 text-danger"
+                *ngIf="addUserForm.controls.email.invalid && addUserForm.controls.email.value == '' && (addUserForm.controls.email.touched || save_clicked)">
+                Email
+                is required</div>
+              <div class="p-1 mb-2 mt-2 text-danger" *ngIf="addUserForm.controls.email.errors?.pattern">Email
+                format mismatched</div>
+            </div>
+            <div class="form-group col-md-6 mb-2">
+              <label for="projectinput4">Mobile Number</label><span style="color: red;">*</span>
+              <input type="tel" id="projectinput4" (keypress)="numberOnly($event)" class="form-control" minLength="10"
+                maxLength="10" formControlName="mobile" placeholder="Phone">
+              <div
+                *ngIf="addUserForm.controls.mobile.invalid && (addUserForm.controls.mobile.touched || save_clicked) || addUserForm.controls.mobile.dirty">
+                <div *ngIf="addUserForm.controls.mobile.errors?.required" class="p-1 mt-2 mb-2 text-danger">Mobile is
+                  required</div>
+                <div
+                  *ngIf="addUserForm.controls.mobile.hasError('minlength') || addUserForm.controls.mobile.hasError('maxlength')"
+                  class="p-1 mt-2 mb-2 text-danger">Mobile
+                  should be 10 digit</div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="form-group col-md-6 mb-2">
+              <label for="projectinput1">Password</label><span style="color: red;">*</span>
+              <input type="password" class="form-control" formControlName="password" placeholder="Password">
+              <div class="p-1 mb-2 mt-2 text-danger"
+                *ngIf="addUserForm.controls.password.invalid && (addUserForm.controls.password.touched || save_clicked)">
+                <ul>
+                  <li>Password is required</li>
+                  <li>Password contain atleast one letter</li>
+                  <li>Password contain atleast one capital letter</li>
+                  <li>Password contain atleast one number</li>
+                  <li>Password contain atleast one Special character (i.e @ # $ %) </li>
+                </ul>
+              </div>
+              <div
+                *ngIf="addUserForm.controls.password.hasError('minlength') || addUserForm.controls.password.hasError('maxlength')"
+                class="p-1 mt-2 mb-2 text-danger">
+                <ul>
+                  <li>
+                    Password contain minimum 8 character
+                  </li>
+                  <li>
+                    Password contain maximum 35 character
+                  </li>
+                </ul>
+              </div>
+
+
+
+            </div>
+            <div class="form-group col-md-6 mb-2">
+              <label for="projectinput2">Confirm Password</label><span style="color: red;">*</span>
+              <input type="password" class="form-control" formControlName="confirmPassword"
+                placeholder="Confirm Password">
+              <div *ngIf="update_clicked && addUserForm.controls.password.value != ''">
+                <div
+                  *ngIf="addUserForm.controls.confirmPassword.value == '' && (addUserForm.controls.confirmPassword.touched || save_clicked)"
+                  class="p-1 mt-2 mb-2 text-danger">Confirm Password is required</div>
+                <div
+                  *ngIf="addUserForm.controls.confirmPassword.invalid && addUserForm.controls.confirmPassword.value != '' &&  addUserForm.controls.confirmPassword.hasError('mismatch')"
+                  class="p-1 mt-2 mb-2 text-danger">Should not matched confirm password</div>
+              </div>
+              <div *ngIf="!update_clicked">
+                <div
+                  *ngIf="addUserForm.controls.confirmPassword.value == '' && (addUserForm.controls.confirmPassword.touched || save_clicked)"
+                  class="p-1 mt-2 mb-2 text-danger">Confirm Password is required</div>
+                <div *ngIf="addUserForm.controls.confirmPassword.invalid && addUserForm.controls.confirmPassword.value != '' &&
+              addUserForm.controls.confirmPassword.hasError('mismatch')" class="p-1 mt-2 mb-2 text-danger">Should
+                  not matched confirm password</div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+ 
+      <div class="fg-actions d-flex justify-content-between">
+        <div class="login-btn">
+          <button class="btn btn-primary" style="margin-left: 15px;" (click)='onSubmit(addUserForm.value, addUserForm.valid)'>
+            <a class="text-decoration-none text-white">Register</a>
+            </button>
+        </div>
+        <div class="recover-pass">
+          <button class="btn btn-primary" style="margin-left: 15px;" (click)='logion()'>
+            <a class="text-decoration-none text-white">Back to Login</a>
+          </button>   
+        </div>
+      </div>
+
+
+
+
+
+
+
+    </form>
+  </div>
+
+</div>

@@ -1,0 +1,293 @@
+<div class="container bg-white" >
+  <!-- [style]="(!showCreateChapterForm) ? 'display:block;' : 'display:none;'" -->
+    <div class="row"*ngIf="!showCreateChapterForm" >
+      <div class="col-12">
+        <div class="title">SOP Content</div>
+        <div style="float: right;" *ngIf="autoLoading">
+          <i class="fa fa-circle-o-notch fa-spin" style="font-size:15px"></i>&nbsp;&nbsp;<span style="color:'#264373';font-size:15px;">Auto saving...</span>
+        </div>
+        <form [formGroup]="addContentForm" (ngSubmit)="createNewContent()">
+          <div class="row justify-content-center">
+            <div class="col-6">
+              <div>
+                <label>Title</label><span class="error_msg"> * </span>
+                <div class="form-group">
+                  <input maxlength="50" placeholder="Enter title" type="text" formControlName="title"
+                    class="form-control"
+                    [ngClass]="{ 'is-invalid': contentSubmitted && addContentFormData.title.errors }" />
+                  <div *ngIf="contentSubmitted && addContentFormData.title.errors" class="invalid-feedback">
+                    <div *ngIf="addContentFormData.title.errors.required">Content Title is required</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-6">
+              <div>
+                <div class="form-group" style="margin-top: -5px;">
+                  <label>SOP Image <span class="error_msg">*</span></label>
+                  <div class="form-group">
+                      <input class="form-control package-inline" type="text" readonly placeholder="Image File"
+                          formControlName="uploadImage"  style="margin-top: 0px;" 
+                          [ngClass]="{ 'is-invalid': addContentFormData.uploadImage.errors && addContentFormData.uploadImage.touched }" />
+                      <label class="btn btn-danger-themed btn-sm margin-top-10" [style]="pointerEvents"
+                          for="contentImage">Upload</label>
+                      <div *ngIf="addContentFormData.uploadImage.errors" class="invalid-feedback">
+                          <div *ngIf="addContentFormData.uploadImage.errors.required">SOP Image is required</div>
+                      </div>
+                      <input id="contentImage" class="d-none" type="file" formControlName="contentImage"
+                      (change)="uploadFile($event)"/>
+                  </div>
+              </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-12">
+              <label>Overview</label><span class="error_msg"> * </span>
+  
+              <div class="form-group">
+                <ckeditor #contentDesc maxlength="5000" formControlName="description" name="description"
+                  language="en" [config]="ckEditorConfig"
+                  [ngClass]="{ 'is-invalid': contentSubmitted && addContentFormData.description.errors }">
+                </ckeditor>
+                
+                <div *ngIf="contentSubmitted && addContentFormData.description.errors" class="invalid-feedback">
+                  <div *ngIf="addContentFormData.description.errors.required">Overview is required</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-6">
+              <label>Language</label><span class="error_msg"> * </span>
+  
+              <div class="form-group">
+                <ng-select [clearable]="false" formControlName="language" class="form-control"
+                  placeholder="Select Language">
+                  <ng-option value="English">English</ng-option>
+                  <ng-option value="Spanish">Spanish</ng-option>
+                </ng-select>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-6 offset-6">
+              <div class="form-group">
+                <button class="float-right btn btn-primary-themed" [disabled]="addContentForm.invalid"
+                  type="submit">Next</button>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+    <!--  -->
+    <!-- [style]="(showCreateChapterForm) ? 'display:block;' : 'display:none;'" -->
+    <div class="row"*ngIf="showCreateChapterForm" >
+      <mat-horizontal-stepper [linear]="isLinear" #stepper>
+        <mat-step >
+            <ng-template matStepLabel>Plan</ng-template>
+              <div class="col-8">
+                <input type='text' class="contentsearch" #contentsearch placeholder='Search' [disabled]='disableTextbox'
+                  (input)="onSearchChange($event.target.value)" />
+              </div>
+              <div class="row">
+                <div class="col-4">
+                  <div class="example-container">
+                    <h2>Reusable Content</h2>
+                    <div
+                      cdkDropList
+                      #todoList="cdkDropList"
+                      [cdkDropListData]="todo"
+                      [cdkDropListConnectedTo]="[doneList]"
+                      class="example-list"
+                      (cdkDropListDropped)="drop($event)">
+                      <div class="example-box" *ngFor="let item of todo" cdkDrag>{{item.title}} <span class="badge" [ngClass]="{'badge-primary': item.type  === 'Video', 'badge-success' : item.type === 'Imported HTML', 'badge-danger': item.type  === 'HTML' }" >{{item.type}}</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-4">
+                  <div class="example-container">
+                    <h2>Selected Content</h2>
+                    <div
+                      cdkDropList
+                      #doneList="cdkDropList"
+                      [cdkDropListData]="done"
+                      [cdkDropListConnectedTo]="[todoList]"
+                      class="example-list"
+                      (cdkDropListDropped)="drop($event)">
+                      <div class="example-box"  *ngFor="let item of done; let i = index" cdkDrag (click)="Preview(item.description)">{{item.title}} <span class="badge" [ngClass]="{'badge-primary': item.type  === 'Video', 'badge-success' : item.type === 'Imported HTML', 'badge-danger': item.type  === 'HTML' }" >{{item.type}}</span>
+                          <!-- <span *ngIf ="i != 0" style=" margin-bottom: -34px; margin-right: -8px;" class="badge badge-secondary" (click) = "makingChild($event, item._id)">Make Me Child</span> -->
+                      </div>
+                    </div>
+                  </div> 
+                </div>
+                <div class="col-4">
+                  <div class="card">
+                    <div class="card-header"><h4>Preview</h4></div>
+                    <div class="card-body">
+                      {{preview}}
+                    </div>
+                  </div>
+                  <!-- <div class="row" style="margin-left: 18px;">
+                    <button class="btn btn-secondary" type="button" (click)="arrangeNow()" *ngIf="hideArrangeBlock">
+                      Arrange Now
+                    </button>
+                
+                    <button  class="btn btn-secondary" type="button" (click)="backToDragAndDrop()" *ngIf="!hideArrangeBlock">
+                      Back to drag and drop
+                    </button>
+                  </div> -->
+                </div>
+              </div>             
+            <div>
+              <button mat-button matStepperNext (click) = "onNext()" class="float-right btn btn-danger-themed ml-1">Next</button>
+              <button mat-button matStepperPrevious (click) = "Back()" class="float-right btn btn-primary-themed">Back</button>
+            </div>
+        </mat-step>
+        <mat-step >
+          <ng-template matStepLabel>Do & Check</ng-template>
+            <div class="col-8">
+              <input type='text' class="contentsearch" #contentsearch1 placeholder='Search' [disabled]='disableTextbox'
+                (input)="onSearchChange1($event.target.value)" />
+            </div>
+            <div class="row">
+              <div class="col-4">
+                <div class="example-container">
+                  <h2>Reusable Content</h2>
+                  <div
+                    cdkDropList
+                    #todoList1="cdkDropList"
+                    [cdkDropListData]="todo1"
+                    [cdkDropListConnectedTo]="[doneList1]"
+                    class="example-list"
+                    (cdkDropListDropped)="drop1($event)">
+                    <div class="example-box" *ngFor="let item of todo1" cdkDrag>{{item.title}} <span class="badge" [ngClass]="{'badge-primary': item.type  === 'Video', 'badge-success' : item.type === 'Imported HTML', 'badge-danger' : item.type === 'HTML'  }" >{{item.type}}</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-4">
+                <div class="example-container">
+                  <h2>Selected Content</h2>
+                  <div
+                    cdkDropList
+                    #doneList1="cdkDropList"
+                    [cdkDropListData]="done1"
+                    [cdkDropListConnectedTo]="[todoList1]"
+                    class="example-list"
+                    (cdkDropListDropped)="drop1($event)">
+                    <div class="example-box"  *ngFor="let item of done1; let i = index" cdkDrag (click) ="Preview1(item.description)" >{{item.title}} <span class="badge" [ngClass]="{'badge-primary': item.type  === 'Video', 'badge-success' : item.type === 'Imported HTML', 'badge-danger': item.type  === 'HTML' }" >{{item.type}}</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-4">
+                <div class="card">
+                  <div class="card-header"><h4>Preview</h4></div>
+                  <div class="card-body">
+                    {{preview1}}
+                  </div>
+                </div>
+                <!-- <div class="row" style="margin-left: 18px;">
+                  <button class="btn btn-secondary" type="button" (click)="arrangeNow()" *ngIf="hideArrangeBlock">
+                    Arrange Now
+                  </button>
+              
+                  <button  class="btn btn-secondary" type="button" (click)="backToDragAndDrop()" *ngIf="!hideArrangeBlock">
+                    Back to drag and drop
+                  </button>
+                </div> -->
+              </div>
+            </div>             
+          <div>
+            <button mat-button matStepperNext (click) = "onNext1()" class="float-right btn btn-danger-themed ml-1">Next</button>
+            <button mat-button matStepperPrevious class="float-right btn btn-primary-themed">Back</button>
+          </div>
+      </mat-step>
+        <mat-step>
+          <ng-template matStepLabel>Check & Act</ng-template>
+            <div class="col-8">
+              <input type='text' class="contentsearch" #contentsearch2 placeholder='Search' [disabled]='disableTextbox'
+                (input)="onSearchChange2($event.target.value)" />
+            </div>
+            <div class="row">
+              <div class="col-4">
+                <div class="example-container">
+                  <h2>Reusable Content</h2>
+                  <div
+                    cdkDropList
+                    #todoList2="cdkDropList"
+                    [cdkDropListData]="todo2"
+                    [cdkDropListConnectedTo]="[doneList2]"
+                    class="example-list"
+                    (cdkDropListDropped)="drop2($event)">
+                    <div class="example-box" *ngFor="let item of todo2" cdkDrag>{{item.title}} <span class="badge" [ngClass]="{'badge-primary': item.type  === 'Video', 'badge-success' : item.type === 'Imported HTML','badge-danger': item.type  === 'HTML' }" >{{item.type}}</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-4">
+                <div class="example-container">
+                  <h2>Selected Content</h2>      
+                  <div
+                    cdkDropList
+                    #doneList2="cdkDropList"
+                    [cdkDropListData]="done2"
+                    [cdkDropListConnectedTo]="[todoList2]"
+                    class="example-list"
+                    (cdkDropListDropped)="drop2($event)">
+                    <div class="example-box"  *ngFor="let item of done2; let i = index" cdkDrag (click) = "Preview2(item.description)">{{item.title}} <span class="badge" [ngClass]="{'badge-primary': item.type  === 'Video', 'badge-success' : item.type === 'Imported HTML', 'badge-danger': item.type  === 'HTML' }" >{{item.type}}</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-4">
+                <div class="card">
+                  <div class="card-header"><h4>Preview</h4></div>
+                  <div class="card-body">
+                    {{preview2}}
+                  </div>
+                </div>
+                <!-- <div class="row" style="margin-left: 18px;">
+                  <button class="btn btn-secondary" type="button" (click)="arrangeNow()" *ngIf="hideArrangeBlock">
+                    Arrange Now
+                  </button>
+              
+                  <button  class="btn btn-secondary" type="button" (click)="backToDragAndDrop()" *ngIf="!hideArrangeBlock">
+                    Back to drag and drop
+                  </button>
+                </div> -->
+              </div>
+            </div>  
+          <div>
+            <button mat-button (click)="submit()" class="float-right btn btn-danger-themed ml-1">Submit</button>
+            <button mat-button matStepperPrevious class="float-right btn btn-primary-themed">Back</button>
+          </div>
+        </mat-step>
+      </mat-horizontal-stepper>
+      <!-- <div class="row">
+        <div class="col-8">
+          
+        </div>
+        <div class="col-4 contentsContainer">
+          <div #imhere class="imhere" id="imhereDiv">
+  
+          </div>
+        </div>
+      </div>
+  
+      <div class="row" style="margin-top: 20px;">
+        <div class="col-8">
+        </div>
+        <div class="col-4">
+          <div style="position: absolute;right:20px;bottom:0;">
+            <button class="btn btn-danger-themed" style="margin-right: 10px;" type="button"
+              (click)="finalData()">Submit</button>
+          </div>
+        </div>
+      </div> -->
+    </div>
+  </div>
+  

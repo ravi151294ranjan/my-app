@@ -1,0 +1,116 @@
+/** Common Css **/
+.container {padding-top: 20px; background: #fff; }
+.nogutter { margin-right: 0; margin-left: 0; margin-top: 0; }
+.justify-end { justify-content: flex-end; }
+.grid {  display: flex; flex-wrap: wrap; margin-top: -.5rem; }
+.footer-nav { padding: 1rem 0 0 0; }
+.createErrorMsg { width: 100%; font-size:13px;color: #dc3545; }
+span.error_msg { color:red }
+.title { font-weight: bold; margin-bottom: 1.5rem; text-decoration: underline; }
+ng-select.filter-type{  max-width: 75% !important;}
+ng-select.langdrpdown{  max-width: 25% !important;}
+.text-right-align { text-align: right; }
+.display-none { display: none;}
+
+/** Preview Page **/
+.preview-container { height: 650px; width: 917px; position: relative; padding-left: 105px;}
+.preview-image { position: absolute; height: 100%; margin-left: -70px; width: 1000px;}
+.preview-text-outer {     position: absolute;
+  /* top: 69px; */
+  /* width: 90%; */
+  /* background-color: #ddd; */
+  /* height: 515px; */
+  margin: 67px 0px 0px 32px;
+  padding: 56xpx 0px 0px 0px;
+}
+.preview-text-inner {    text-align: justify;
+  /* padding: 20px; */
+  /* overflow: scroll; */
+  height: 515px;
+  width: 795px;}
+.preview-title { font-weight: bold;}
+::-webkit-scrollbar { width: 0.25rem; border-radius: 0.125rem; }
+::-webkit-scrollbar-track { border-radius: 0.125rem; background-color: lightgray; }
+::-webkit-scrollbar-thumb { border-radius: 0.125rem; background-color: gray }
+::-webkit-scrollbar-thumb:hover { border-radius: 0.125rem; background-color: gray }
+
+/** INTERMEDIATE PAGE **/
+.icon-bg { height: 85px; }
+.caption { font-size: 15px; display: block; color: #fff;}
+.border-bottom-0 { border-bottom:0px !important}
+.intermediage-page-align { padding-top: 135px; text-align: center; height: 250px; }
+div.item { vertical-align: top; text-align: center; width: 210px; display: inline-block; cursor: pointer; }
+.intermediage-page-bg { background-image: url(/assets/img/gallery/inner-bg.png); opacity: 0.9;
+   // background: linear-gradient(to left, #5d8ab5, #a6badd, #5d8ab5);
+}
+.font-size-70 { font-size: 70px;}   
+.intermediate-page-modal-height {height:400px;}
+
+/** TOOLTIP CSS  **/
+::ng-deep .tooltip-inner { width: 125px; text-align: left; background-color: #000; color: #fff; }
+::ng-deep .contentlistTooltip .tooltip-inner { max-width: 500px; width: auto; background-color: #000; color: #fff; }
+
+/** Search Content PAGE CSS **/
+.search-title {color: #fff;}
+.contentsearch { padding:4px; width: 100%; }
+.faDesigns{ margin-left: 10px; cursor: pointer; color:#fff; }
+.filterDesign{ display: inline-block; text-align: left; margin-right: 2vh; }
+.padding-right-25 { padding-right: 25px; }
+
+/** List Content CSS **/
+span.content-card { font-family: Verdana; font-size: 12px; }
+.card-errorMsg { color:#fff;  font-size: 15px; font-weight: bold; font-family: verdana; }
+.text-capital { text-transform:capitalize; }
+.cursor-pointer{ cursor: pointer; }
+.padding-top-10 { padding-top: 10px; }
+.search-results { height: 100%; }
+.content-title { font-weight: bold;  color: #000; text-transform: capitalize; }
+.close-button { height: 35px; width: 35px; border: none; display: inline-block; overflow: hidden;
+    text-decoration: none; color: #fff; background-color: inherit; text-align: center; cursor: pointer;
+    white-space: nowrap; outline: none; box-shadow: none !important; border-radius: 0px;
+      i {
+        margin-left: 8px;
+        font-size: 15px;
+      }
+  }
+.topright { position: absolute; right:10px; top: 0;}
+.font-size-12 {font-size: 12px}
+.font-size-20 {font-size: 20px}
+.color-red {color:red;}
+.color-black {color:#000;}
+.padding-left-470 {padding-left: 470px;}
+.defaultVersion {
+  font-size: 13px;
+  font-weight: bold;
+  color: #000;
+}
+.float-right {
+  float:right;
+}
+::ng-deep .modal-dialog { max-width: 1024px; }
+
+::ng-deep .modal-sm { width: 500px; } //Small popup size [Delete confirmation]
+::ng-deep .modal-md { width: 800px; } //Medium popup size [Intermediate page]
+
+.preview-container-popup {
+    height: 700px;
+    width: 1200px;
+    position: relative;
+    padding-left: 55px;
+}
+.preview-image-popup {
+  position: absolute;
+  height: 100%;
+  margin-left: -70px;
+  width: 1218px;
+}
+.preview-text-outer-popup {
+  position: absolute;
+  margin: 77px 0px 0px 55px;
+}
+
+.preview-text-inner-popup {
+  text-align: justify;
+  height: 515px;
+  width: 965px;
+}

@@ -1,0 +1,755 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: routes/assetmanage.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: routes/assetmanage.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
+ * AssestModel module to perform asset operations..
+ * @module Assetmanage
+ * @see {@link assestModel}
+ */
+
+var express = require('express');
+var router = express.Router();
+const assestModel = require("../models/assetModel")
+var util = require("../utils/util");
+var ObjectID = require('mongodb').ObjectID;
+
+/**
+ * Sends a HTTP GET request to get all asset category.
+ * &lt;/br>
+ * @function GetAllAssetType
+ * 
+ * @path {get} path /asset/GetAllAssetType
+ * @param req {Object} The req object represents the HTTP request.
+ * @param res {Object} The res object represents the HTTP response.
+ * @param {Function}  assestModel.GetAllAssetType() This function is used to pass data from assestmanage 
+ * routes to asset model to get all record in database
+ * @return {Object} Its retrun success or failure message with all data.
+ */
+
+router.get('/GetAllAssetType', (req, res) => {
+    try {
+        const vGetAllCategory = assestModel.getAlldata('typeList', '')
+        vGetAllCategory.then((data) => {
+            if (data.length > 0) {
+                let result = {
+                    success: true,
+                    data: data
+                }
+                res.status(200).send(result);
+            } else {
+                let result = {
+                    success: false,
+                    data: ''
+                }
+                res.status(200).send(result);
+            }
+        }).catch(err => {
+            util.writeLog(`${err} -> get asset typr Error`, 'get:/asset/GetAllAssetType');
+            var error = new Error();
+            error.success = false;
+            error.status = 404;
+            error.message = 'Asset Type not found';
+            res.send(error);
+        })
+    } catch (err) {
+        util.writeLog(`${err} -> get asset type Error`, 'get:/asset/GetAllAssetType');
+        var error = new Error();
+        error.success = false;
+        error.status = 404;
+        error.message = 'An internal error occurred. Please try again later';
+        res.send(error);
+    }
+
+})
+
+/**
+ * Sends a HTTP GET request to get all asset.
+ * &lt;/br>
+ * @function GetAllAsset
+ * 
+ * @path {get} path /asset/GetAllAsset
+ * @param req {Object} The req object represents the HTTP request.
+ * @param res {Object} The res object represents the HTTP response.
+ * @param {Function}  assestModel.GetAllAsset() This function is used to pass data from assestmanage 
+ * routes to asset model to get all record in database
+ * @return {Object} Its retrun success or failure message with all data.
+ */
+router.get('/GetAllAsset', (req, res) => {
+    try {
+        const vGetAllCategory = assestModel.getAlldata('assestdetails', '')
+        vGetAllCategory.then((data) => {
+            if (data.length > 0) {
+                let result = {
+                    success: true,
+                    data: data
+                }
+                res.status(200).send(result);
+            } else {
+                let result = {
+                    success: false,
+                    data: ''
+                }
+                res.status(200).send(result);
+            }
+        }).catch(err => {
+            util.writeLog(`${err} -> get asset Error`, 'get:/asset/GetAllAsset');
+            var error = new Error();
+            error.success = false;
+            error.status = 404;
+            error.message = 'Asset not found';
+            res.send(error);
+        })
+    } catch (err) {
+        util.writeLog(`${err} -> get asset Error`, 'get:/asset/GetAllAsset');
+        var error = new Error();
+        error.success = false;
+        error.status = 404;
+        error.message = 'An internal error occurred. Please try again later';
+        res.send(error);
+    }
+})
+
+
+
+
+/**
+ * Sends a HTTP GET request to get all asset.
+ * &lt;/br>
+ * @function getAllassetViewMode
+ * 
+ * @path {get} path /asset/getAllassetViewMode
+ * @param req {Object} The req object represents the HTTP request.
+ * @param res {Object} The res object represents the HTTP response.
+ * @param {Function}  assestModel.getAllassetViewMode() This function is used to pass data from assestmanage 
+ * routes to asset model to get all record in database
+ * @return {Object} Its retrun success or failure message with all data.
+ */
+router.get('/getAllassetViewMode', (req, res) => {
+    try {
+        const vGetAllviewMode = assestModel.getAllassetViewMode('viewMode', '')
+        vGetAllviewMode.then((data) => {
+            if (data.length > 0) {
+                let result = {
+                    success: true,
+                    data: data
+                }
+                res.status(200).send(result);
+            } else {
+                let result = {
+                    success: false,
+                    data: ''
+                }
+                res.status(200).send(result);
+            }
+        }).catch(err => {
+            util.writeLog(`${err} -> get asset vGetAllviewMode Error`, 'get:/asset/getAllassetViewMode');
+            var error = new Error();
+            error.success = false;
+            error.status = 404;
+            error.message = 'Viewmode not found';
+            res.send(error);
+        })
+    } catch (err) {
+        util.writeLog(`${err} -> get asset vGetAllviewMode Error`, 'get:/asset/getAllassetViewMode');
+        var error = new Error();
+        error.success = false;
+        error.status = 404;
+        error.message = 'An internal error occurred. Please try again later';
+        res.send(error);
+    }
+})
+
+
+
+/**
+ * Sends a HTTP GET request to get all asset.
+ * &lt;/br>
+ * @function getAllassetInventoryItemKeyName
+ * 
+ * @path {get} path /asset/getAllassetInventoryItemKeyName
+ * @param req {Object} The req object represents the HTTP request.
+ * @param res {Object} The res object represents the HTTP response.
+ * @param {Function}  assestModel.getAllassetInventoryItemKeyName() This function is used to pass data from assestmanage 
+ * routes to asset model to get all record in database
+ * @return {Object} Its retrun success or failure message with all data.
+ */
+router.post('/getAllassetInventoryItemKeyName', (req, res) => {
+    try {
+        const vGetAllInventoryItemKeyName = assestModel.getAllassetInventoryItemKeyName('inventoryItemKeyName', req.body)
+        vGetAllInventoryItemKeyName.then((data) => {
+            if (data.length > 0) {
+                let result = {
+                    success: true,
+                    data: data
+                }
+                res.status(200).send(result);
+            } else {
+                let result = {
+                    success: false,
+                    data: ''
+                }
+                res.status(200).send(result);
+            }
+        }).catch(err => {
+            util.writeLog(`${err} -> get asset vGetAllInventoryItemKeyName Error`, 'get:/asset/getAllassetInventoryItemKeyName');
+            var error = new Error();
+            error.success = false;
+            error.status = 404;
+            error.message = 'InventoryItem not found';
+            res.send(error);
+        })
+    } catch (err) {
+        util.writeLog(`${err} -> get asset vGetAllInventoryItemKeyName Error`, 'get:/asset/getAllassetInventoryItemKeyName');
+        var error = new Error();
+        error.success = false;
+        error.status = 404;
+        error.message = 'An internal error occurred. Please try again later';
+        res.send(error);
+    }
+})
+
+
+
+/**
+ * Sends a HTTP GET request to get all asset.
+ * &lt;/br>
+ * @function getAllassetModelDetails
+ * 
+ * @path {get} path /asset/getAllassetModelDetails
+ * @param req {Object} The req object represents the HTTP request.
+ * @param res {Object} The res object represents the HTTP response.
+ * @param {Function}  assestModel.getAllassetModelDetails() This function is used to pass data from assestmanage 
+ * routes to asset model to get all record in database
+ * @return {Object} Its retrun success or failure message with all data.
+ */
+router.post('/getAllassetModelDetails', (req, res) => {
+    try {
+        const vGetAllModelDetails = assestModel.getAllassetModelDetails('modelDetails', req.body)
+        vGetAllModelDetails.then((data) => {
+            if (data.length > 0) {
+                let result = {
+                    success: true,
+                    data: data
+                }
+                res.status(200).send(result);
+            } else {
+                let result = {
+                    success: false,
+                    data: ''
+                }
+                res.status(200).send(result);
+            }
+        }).catch(err => {
+            util.writeLog(`${err} -> get asset vGetAllModelDetails Error`, 'get:/asset/getAllassetModelDetails');
+            var error = new Error();
+            error.success = false;
+            error.status = 404;
+            error.message = 'ModelDetails not found';
+            res.send(error);
+        })
+    } catch (err) {
+        util.writeLog(`${err} -> get asset vGetAllModelDetails Error`, 'get:/asset/getAllassetModelDetails');
+        var error = new Error();
+        error.success = false;
+        error.status = 404;
+        error.message = 'An internal error occurred. Please try again later';
+        res.send(error);
+    }
+})
+
+
+
+/**
+ * Sends a HTTP POST request to create asset record.
+ * &lt;/br> 
+ * @function createAssetData
+ * @function
+ * @path {POST} path /asset/assestModel
+ * @param req {Object} The req object represents the HTTP request.
+ * @param res {Object} The res object represents the HTTP response.
+ * @param req.body {Object} The JSON payload. Its contain user details to store in  userStore.
+ * @param {Function}  assestModel.CreateAsset() This function is used to pass  data from assestmanage routes to asset model 
+ * to create record in database
+ * @return {Object} Its retrun success or failure message based on data insertion.
+ */
+
+router.post('/createAssetData', (req, res) => {
+    try {
+        var data = req.body;
+        
+        data['ceratedAt']=new Date()
+        const CreateAsset = assestModel.CreateAsset('assestdetails', data)
+        CreateAsset.then((datavalue) => {
+            res.status(200).send(datavalue)
+        }).catch(err => {
+            var error = new Error();
+            util.writeLog(`${err} -> create Asset Error`, 'post:/asset/createAssetData');
+            error.success = false;
+            error.status = 404;
+            error.message = 'Asset not created';
+            res.send(error);
+        })
+    } catch (err) {
+        util.writeLog(`${err} -> create Asset Error`, 'post:/asset/createAssetData');
+        var error = new Error();
+        error.success = false;
+        error.status = 404;
+        error.message = 'An internal error occurred. Please try again later';
+        res.send(error);
+    }
+})
+
+
+/**
+ * Sends a HTTP GET request to get asset for edit.
+ * &lt;/br>
+ * @function getAssetForEdit
+ * 
+ * @function
+ * @path {get} path /asset/getAssetForEdit
+ * @param req {Object} The req object represents the HTTP request.
+ * @param res {Object} The res object represents the HTTP response.
+ * @param :id {string} Id is used to get specific asset. it represent _id.
+ * @param {Function}  assestModel.getSingleAsset() This function is used to pass data from assestmanage 
+ * routes to asset model to get specific record in database
+ * @return {Object} Its retrun success or failure message with data.
+ */
+router.get('/getAssetForEdit/:id', (req, res) => {
+    try {
+        if (req.params.id) {
+            var id = req.params.id;
+            var vGetUser = assestModel.getSingleAsset('assestdetails', id)
+            vGetUser.then((data) => {
+                if (data.message) {
+                    res.status(404).send(data)
+                }
+                res.status(200).send(data)
+            }).catch(err => {
+                util.writeLog(`${err} -> getAssetForEdit Error`, 'get:/Asset/getAssetForEdit');
+                let error = new Error();
+                error.success = false;
+                error.status = 404;
+                error.message = 'Asset not found ';
+                res.send(error);
+            })
+        } else {
+            util.writeLog(`getAssetForEdit Error`, 'get:/Asset/getAssetForEdit/:id');
+            var error = new Error();
+            error.success = false;
+            error.status = 404;
+            error.message = 'Asset not found ';
+            res.send(error);
+        }
+    } catch (err) {
+        util.writeLog(`${err} -> getAssetForEdit Error`, 'get:/Asset/getAssetForEdit/:id');
+        var error = new Error();
+        error.success = false;
+        error.status = 404;
+        error.message = 'An internal error occurred. Please try again later';
+        res.send(error);
+    }
+
+})
+
+
+
+/**
+ * Sends a HTTP PUT request to update user record based on tenant Login.
+ * &lt;/br>
+ * @function updateasset
+ * 
+ * @function
+ * @path {PUT} path /asset/updateUser
+ * @param req {Object} The req object represents the HTTP request.
+ * @param res {Object} The res object represents the HTTP response.
+ * @param req.body {Object} The JSON payload. Its contain asset details to store in  assetStore.
+ * @param :id {string} Id is used to update specific asset. it represent _id.
+ * @param userStore  {Object} All parsed data is stored in assetrStore object
+ * @param {Function}  assestModel.updateasset() This function is used to pass userStore data from asset 
+ * routes to asset model to update record in database
+ * @return {Object} Its return success or failure message based on data updation.
+ */
+
+router.put('/updateasset/:id', (req, res) => {
+    try {
+        let valueObj = req.body
+        console.log(req.body)
+        delete valueObj._id
+
+        for(let i=0;i&lt; valueObj.scenarioaxisDetails.length;i++){
+            valueObj.scenarioaxisDetails[i]._id=ObjectID(valueObj.scenarioaxisDetails[i]._id)
+        }
+        console.log(valueObj)
+        valueObj['updatedAt']=new Date()
+        const vUpdateAsset = assestModel.updateasset('assestdetails', valueObj, req.params.id)
+        vUpdateAsset.then((data) => {
+            res.status(200).send(data)
+        }).catch(err => {
+            util.writeLog(`${err} -> updateasset Error`, 'put:/Asset/updateasset/:id');
+            var error = new Error();
+            error.success = false;
+            error.status = 404;
+            error.message = 'Asset not Update ';
+            res.send(error);
+        })
+    } catch (err) {
+        util.writeLog(`${err} -> updateasset Error`, 'put:/Asset/updateasset/:id');
+        var error = new Error();
+        error.success = false;
+        error.status = 404;
+        error.message = 'An internal error occurred. Please try again later';
+        res.send(error);
+    }
+})
+
+
+
+
+
+
+/**
+ * Sends a HTTP GET request to get all asset.
+ * &lt;/br>
+ * @function getAllScenarioListDetails
+ * 
+ * @path {get} path /asset/getAllScenarioListDetails
+ * @param req {Object} The req object represents the HTTP request.
+ * @param res {Object} The res object represents the HTTP response.
+ * @param {Function}  assestModel.getAllScenarioListDetails() This function is used to pass data from assestmanage 
+ * routes to asset model to get all record in database
+ * @return {Object} Its retrun success or failure message with all data.
+ */
+router.get('/getAllScenarioListDetails', (req, res) => {
+    try {
+        const vGetAllScenarioListDetails = assestModel.getAllScenarioListDetails('scenario_List')
+        vGetAllScenarioListDetails.then((data) => {
+            if (data.length > 0) {
+                let result = {
+                    success: true,
+                    data: data
+                }
+                res.status(200).send(result);
+            } else {
+                let result = {
+                    success: false,
+                    data: ''
+                }
+                res.status(200).send(result);
+            }
+        }).catch(err => {
+            util.writeLog(`${err} -> get asset vGetAllScenarioListDetails Error`, 'get:/asset/getAllScenarioListDetails');
+            var error = new Error();
+            error.success = false;
+            error.status = 404;
+            error.message = 'Scenario List not found';
+            res.send(error);
+        })
+    } catch (err) {
+        util.writeLog(`${err} -> get asset vGetAllScenarioListDetails Error`, 'get:/asset/getAllScenarioListDetails');
+        var error = new Error();
+        error.success = false;
+        error.status = 404;
+        error.message = 'An internal error occurred. Please try again later';
+        res.send(error);
+    }
+})
+
+
+
+
+/**
+ * Sends a HTTP POST request to create asset record.
+ * &lt;/br> 
+ * @function createCategory
+ * @function
+ * @path {POST} path /asset/createCategory
+ * @param req {Object} The req object represents the HTTP request.
+ * @param res {Object} The res object represents the HTTP response.
+ * @param req.body {Object} The JSON payload. Its contain user details to create category.
+ * @param {Function}  assestModel.CreateCategory() This function is used to pass  data from assestmanage routes to asset model 
+ * to create record in database
+ * @return {Object} Its retrun success or failure message based on data insertion.
+ */
+
+router.post('/createcategory', (req, res) => {
+    try {
+        var data = req.body;
+        
+        data['ceratedAt']=new Date()
+        const CreateAsset = assestModel.createCategory('categoryList', data)
+        CreateAsset.then((datavalue) => {
+            res.status(200).send(datavalue)
+        }).catch(err => {
+            var error = new Error();
+            util.writeLog(`${err} -> create category Error`, 'post:/asset/createcategory');
+            error.success = false;
+            error.status = 404;
+            error.message = 'Category not created';
+            res.send(error);
+        })
+    } catch (err) {
+        util.writeLog(`${err} -> create Category Error`, 'post:/asset/createcategory');
+        var error = new Error();
+        error.success = false;
+        error.status = 404;
+        error.message = 'An internal error occurred. Please try again later';
+        res.send(error);
+    }
+})
+
+
+/**
+ * Sends a HTTP GET request to get all asset category.
+ * &lt;/br>
+ * @function GetAllAssetCategory
+ * 
+ * @path {get} path /asset/GetAllAssetCategory
+ * @param req {Object} The req object represents the HTTP request.
+ * @param res {Object} The res object represents the HTTP response.
+ * @param {Function}  assestModel.getAlldata() This function is used to pass data from assestmanage 
+ * routes to asset model to get all record in database
+ * @return {Object} Its retrun success or failure message with all data.
+ */
+
+router.get('/GetAllAssetCategory/:id', (req, res) => {
+    try {
+        console.log(req.params.id+"========++++++++++++")
+        let searchItem={
+            type:req.params.id
+        }
+        const vGetAllCategory = assestModel.getAssetdata('categoryList',searchItem)
+        vGetAllCategory.then((data) => {
+            if (data.length > 0) {
+                let result = {
+                    success: true,
+                    data: data
+                }
+                res.status(200).send(result);
+            } else {
+                let result = {
+                    success: false,
+                    data: []
+                }
+                res.status(200).send(result);
+            }
+        }).catch(err => {
+            util.writeLog(`${err} -> get asset cat Error`, 'get:/asset/GetAllAssetCategory');
+            var error = new Error();
+            error.success = false;
+            error.status = 404;
+            error.message = 'Asset Category not found';
+            res.send(error);
+        })
+    } catch (err) {
+        util.writeLog(`${err} -> get asset cat Error`, 'get:/asset/GetAllAssetCategory');
+        var error = new Error();
+        error.success = false;
+        error.status = 404;
+        error.message = 'An internal error occurred. Please try again later';
+        res.send(error);
+    }
+
+})
+
+
+
+/**
+ * Sends a HTTP GET request to get all asset category.
+ * &lt;/br>
+ * @function getAsset
+ * 
+ * @path {get} path /asset/getAsset
+ * @param req {Object} The req object represents the HTTP request.
+ * @param res {Object} The res object represents the HTTP response.
+ * @param {Function}  assestModel.getAlldata() This function is used to pass data from assestmanage 
+ * routes to asset model to get all record in database
+ * @return {Object} Its retrun success or failure message with all data.
+ */
+
+router.get('/getAsset', (req, res) => {
+    try {
+        let searchItem={type:'Asset'}
+        const vGetAssetdata = assestModel.getAssetdata('assestdetails', searchItem)
+        vGetAssetdata.then((data) => {
+            if (data.length > 0) {
+                let result = {
+                    success: true,
+                    data: data
+                }
+                res.status(200).send(result);
+            } else {
+                let result = {
+                    success: false,
+                    data: []
+                }
+                res.status(200).send(result);
+            }
+        }).catch(err => {
+            util.writeLog(`${err} -> get asset Error`, 'get:/asset/getAsset');
+            var error = new Error();
+            error.success = false;
+            error.status = 404;
+            error.message = 'Asset not found';
+            res.send(error);
+        })
+    } catch (err) {
+        util.writeLog(`${err} -> get asset Error`, 'get:/asset/getAsset');
+        var error = new Error();
+        error.success = false;
+        error.status = 404;
+        error.message = 'An internal error occurred. Please try again later';
+        res.send(error);
+    }
+
+})
+
+/**
+ * Sends a HTTP GET request to get all asset category.
+ * &lt;/br>
+ * @function getScene
+ * 
+ * @path {get} path /asset/getScene
+ * @param req {Object} The req object represents the HTTP request.
+ * @param res {Object} The res object represents the HTTP response.
+ * @param {Function}  assestModel.getAlldata() This function is used to pass data from scenetmanage 
+ * routes to asset model to get all record in database
+ * @return {Object} Its retrun success or failure message with all data.
+ */
+
+router.get('/getScene', (req, res) => {
+    try {
+        let searchItem={type:'Scene'}
+        const vGetAssetdata = assestModel.getAssetdata('assestdetails', searchItem)
+        vGetAssetdata.then((data) => {
+            if (data.length > 0) {
+                let result = {
+                    success: true,
+                    data: data
+                }
+                res.status(200).send(result);
+            } else {
+                let result = {
+                    success: false,
+                    data: []
+                }
+                res.status(200).send(result);
+            }
+        }).catch(err => {
+            util.writeLog(`${err} -> get scene Error`, 'get:/asset/getScene');
+            var error = new Error();
+            error.success = false;
+            error.status = 404;
+            error.message = 'Scene not found';
+            res.send(error);
+        })
+    } catch (err) {
+        util.writeLog(`${err} -> get scene Error`, 'get:/asset/getScene');
+        var error = new Error();
+        error.success = false;
+        error.status = 404;
+        error.message = 'An internal error occurred. Please try again later';
+        res.send(error);
+    }
+
+})
+
+
+/**
+ * Sends a HTTP GET request to get all asset category.
+ * &lt;/br>
+ * @function getScene
+ * 
+ * @path {get} path /asset/getScene
+ * @param req {Object} The req object represents the HTTP request.
+ * @param res {Object} The res object represents the HTTP response.
+ * @param {Function}  assestModel.getAlldata() This function is used to pass data from scenetmanage 
+ * routes to asset model to get all record in database
+ * @return {Object} Its retrun success or failure message with all data.
+ */
+
+router.get('/getAudio', (req, res) => {
+    try {
+        let searchItem={type:'Audio'}
+        const vGetAssetdata = assestModel.getAssetdata('assestdetails', searchItem)
+        vGetAssetdata.then((data) => {
+            if (data.length > 0) {
+                let result = {
+                    success: true,
+                    data: data
+                }
+                res.status(200).send(result);
+            } else {
+                let result = {
+                    success: false,
+                    data: []
+                }
+                res.status(200).send(result);
+            }
+        }).catch(err => {
+            util.writeLog(`${err} -> get Audio Error`, 'get:/asset/getAudio');
+            var error = new Error();
+            error.success = false;
+            error.status = 404;
+            error.message = 'Audio not found';
+            res.send(error);
+        })
+    } catch (err) {
+        util.writeLog(`${err} -> get Audio Error`, 'get:/asset/getAudio');
+        var error = new Error();
+        error.success = false;
+        error.status = 404;
+        error.message = 'An internal error occurred. Please try again later';
+        res.send(error);
+    }
+
+})
+
+
+module.exports = router</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-AdminDetails.html">AdminDetails</a></li><li><a href="module-Appconfig.html">Appconfig</a></li><li><a href="module-Asset%2520Model.html">Asset Model</a></li><li><a href="module-Assetmanage.html">Assetmanage</a></li><li><a href="module-AuthMiddleware.html">AuthMiddleware</a></li><li><a href="module-dashboard.html">dashboard</a></li><li><a href="module-DB%2520Connection.html">DB Connection</a></li><li><a href="module-ErrorLog.html">ErrorLog</a></li><li><a href="module-forgot%2520Model.html">forgot Model</a></li><li><a href="module-forgotPwd.html">forgotPwd</a></li><li><a href="module-Group.html">Group</a></li><li><a href="module-Group%2520Model.html">Group Model</a></li><li><a href="module-Register.html">Register</a></li><li><a href="module-Report.html">Report</a></li><li><a href="module-Report%2520Model.html">Report Model</a></li><li><a href="module-Scenario.html">Scenario</a></li><li><a href="module-Scenario%2520Model.html">Scenario Model</a></li><li><a href="module-ScenarioUser.html">ScenarioUser</a></li><li><a href="module-sendEmail%2520Model.html">sendEmail Model</a></li><li><a href="module-ShorturlGet.html">ShorturlGet</a></li><li><a href="module-SuperAdmin.html">SuperAdmin</a></li><li><a href="module-TenantDetails.html">TenantDetails</a></li><li><a href="module-TokenGenration.html">TokenGenration</a></li><li><a href="module-Upload.html">Upload</a></li><li><a href="module-URLShortner.html">URLShortner</a></li><li><a href="module-User.html">User</a></li><li><a href="module-User%252520Model.html">User Model</a></li><li><a href="module-WEBGL%2520Model.html">WEBGL Model</a></li></ul><h3>Global</h3><ul><li><a href="global.html#getAllAssetForUnity">getAllAssetForUnity</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.7</a> on Wed Jun 02 2021 15:41:57 GMT+0530 (India Standard Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

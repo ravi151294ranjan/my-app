@@ -1,0 +1,235 @@
+// Login Page
+h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
+  font-family: SourceSansPro !important;
+}
+
+#login {
+    //background-image: url('../../../../assets/img/gallery/light-bg.jpg');
+    background-image: url('../../../../assets/img/gallery/NetApp-bg.png');
+    
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+  
+    .login-img {
+      padding: 0;
+      background: #f0f0f0;
+    }
+  
+    .login-btn {
+      .btn.btn-outline-primary {
+        &:hover {
+          a {
+            color: #fff;
+          }
+        }
+      }
+    }
+  
+    .recover-pass {
+      button.btn.btn-primary {
+        color: #fff !important;
+      }
+    }
+  
+    .forgot-password-option,
+    .remember-me {
+  
+      a.text-decoration-none,
+      .custom-control-label {
+        font-size: 14px;
+      }
+    }
+  }
+  
+  h4 , p {
+    color: black;
+  }
+
+  input {
+    background-color: rgba(0,0,0,0.1);
+    // color: red;
+    border: none;
+    }
+
+
+
+
+
+
+
+.card {
+  // width: 300px;
+  // width: 40%;
+  opacity: 0.9;
+  box-sizing: border-box;
+  padding: 2em;
+  font-family: Ubuntu;
+  border-radius: 25px;
+  color: white;
+  line-height: 25px;
+  // box-shadow: 5px 5px 10px #ccc;
+  float: left;
+  margin-top: 65px;
+  margin-right: 1em;
+  background: linear-gradient(to top,#5d8ab5, #a6badd,#5d8ab5)
+
+  //background: linear-gradient(to top,#193059, #1e468b,#224a8f,#204b90)
+}
+.colorbg{
+  background: linear-gradient(to top,#193059, #1e468b,#224a8f,#204b90)
+
+}
+
+.dot {
+  position: absolute;
+  height: 100px;
+  width: 100px;
+  background-color: #1b335f;
+  border-radius: 50%;
+  // display: inline-block;
+  margin-top: -25%;
+  z-index: 999999999999;
+  box-shadow: 0px 0px 10px #7494c9;
+}
+
+
+
+.input-group-append {
+  margin-left: 10px;
+}
+
+
+input.ng-invalid.ng-touched {
+  border: 2px solid red;
+}
+.button {
+  padding: 6px 22px;
+  // font-size: 24px;
+  text-align: center;
+  cursor: pointer;
+  outline: none;
+  color: #fff;
+  font-family: Ubuntu;
+  background-color: #0e3053;
+  border: none;
+  border-radius: 8px;
+}
+button:disabled {
+  cursor: default;
+}
+
+// .button:hover {background-color: #6c9cf0; color: #fff;}
+
+.button:active {
+  background-color: #6c9cf0;
+  box-shadow: 0 2px #666;
+  transform: translateY(4px);
+}
+
+
+
+
+/* 
+  ##Device = Desktops
+  ##Screen = 1281px to higher resolution desktops
+*/
+
+@media (min-width: 1441px) and (max-width: 1680px){
+  
+  .dot {
+    position: absolute;
+    height: 100px;
+    width: 100px;
+    background-color: #1b335f;
+    border-radius: 50%;
+    // display: inline-block;
+    margin-top: -23%;
+    z-index: 999999999999;
+    box-shadow: 0px 0px 10px #7494c9;
+  }
+// .card {
+//   width: 35%;
+// }  
+}
+
+
+@media (min-width: 1681px) and (max-width: 1920px){
+  
+  .dot {
+    position: absolute;
+    height: 100px;
+    width: 100px;
+    background-color: #1b335f;
+    border-radius: 50%;
+    // display: inline-block;
+    margin-top: -21%;
+    z-index: 999999999999;
+    box-shadow: 0px 0px 10px #7494c9;
+  }
+// .card {
+//   width: 35%;
+// }  
+}
+
+
+
+
+@media (min-width: 1921px) and (max-width: 2560px){
+  
+  .dot {
+    position: absolute;
+    height: 100px;
+    width: 100px;
+    background-color: #1b335f;
+    border-radius: 50%;
+    // display: inline-block;
+    margin-top: -14%;
+    z-index: 999999999999;
+    box-shadow: 0px 0px 10px #7494c9;
+  }
+// .card {
+//   width: 27%;
+// }  
+}
+
+
+/* 
+  ##Device = Laptops, Desktops
+  ##Screen = B/w 1025px to 1280px
+*/
+
+@media (min-width: 1025px) and (max-width: 1280px) {
+  
+  .dot {
+    position: absolute;
+    height: 100px;
+    width: 100px;
+    background-color: #1b335f;
+    border-radius: 50%;
+    // display: inline-block;
+    margin-top: -30%;
+    z-index: 999999999999;
+    box-shadow: 0px 0px 10px #7494c9;
+  }
+  
+  
+}
+
+
+@media screen and (aspect-ratio: 16/9) {
+  .dot {
+    position: absolute;
+    height: 100px;
+    width: 100px;
+    background-color: #1b335f;
+    border-radius: 50%;
+    // display: inline-block;
+    // margin-top: -38%;
+    z-index: 999999999999;
+    box-shadow: 0px 0px 10px #7494c9;
+  }
+  // .card {
+  //   width: 60%;
+  // }  
+}
+

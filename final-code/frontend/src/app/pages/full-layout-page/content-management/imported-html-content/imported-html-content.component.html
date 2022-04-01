@@ -1,0 +1,109 @@
+<div class="container">
+    <div class="col-12">
+        <div class="title">Imported HTML Content</div>
+        <div style="float: right;" *ngIf="autoLoading">
+            <i class="fa fa-circle-o-notch fa-spin" style="font-size:15px"></i>&nbsp;&nbsp;<span style="color:'#264373';font-size:15px;">Auto saving...</span>
+        </div>
+        <form [formGroup]="contentHtmlForm" (ngSubmit)="onSubmit()">
+            <div id="step1" *ngIf="!showSecondStepForm">
+                <div class="form-group">
+                    <label>Title <span class="error_msg">*</span></label>
+                    <input type="text" maxlength="50" class="form-control" placeholder="" id="title" name="title"
+                        formControlName="title" (change)="onValidateStep1()" />
+                    <div *ngIf="contentForm.title.errors && contentForm.title.touched">
+                        <div *ngIf="contentForm.title.errors.required" class="createErrorMsg">Title is required</div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Overview <span class="error_msg">*</span></label>
+                    <ckeditor formControlName="description" name="description" id="description" [config]="config" (change)="onValidateStep1()">
+                    </ckeditor>
+                    <div *ngIf="contentForm.description.errors && contentForm.description.touched">
+                        <div *ngIf="contentForm.description.errors.required" class="createErrorMsg">Overview is required
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Language</label>
+                    <ng-select class="langdrpdown" formControlName="language" name="language" id="language" [clearable]="false">
+                        <ng-option *ngFor="let lang of languageList" [value]="lang.name">{{lang.name}}</ng-option>
+                    </ng-select>
+                </div>
+                <div class="footer-nav">
+                    <div class="grid nogutter justify-end">
+                        <button (click)="cancel();" class="btn btn-primary-themed  btn-sm" type="button"><i
+                            class="fa fa-chevron-left"></i> Cancel </button> &nbsp;
+                        <button [disabled]="!isNextBtnEnable"  (click)="next();" class="btn btn-primary-themed  btn-sm" type="button">Save & Proceed <i
+                                class="fa fa-chevron-right"></i></button>
+                    </div>
+                </div>
+            </div>
+
+
+            <div id="step2" *ngIf="showSecondStepForm">
+                <div class="form-group">
+                    <label>Upload HTML Package <span class="error_msg">*</span></label>
+                    <div class="form-group">
+                        <input class="form-control package-inline" type="text" readonly placeholder="HTML File"
+                            formControlName="htmlPackage"
+                            [ngClass]="{ 'is-invalid': contentForm.htmlPackage.errors && contentForm.htmlPackage.touched }" />
+                        <label class="btn btn-danger-themed btn-sm margin-top-10" [style]="pointerEvents"
+                            for="contentPackage">Upload</label>
+                        <div *ngIf="contentForm.htmlPackage.errors" class="invalid-feedback">
+                            <div *ngIf="contentForm.htmlPackage.errors.required">HTML package is required</div>
+                        </div>
+
+                        <input id="contentPackage" class="display-none" type="file" formControlName="contentPackage"
+                            (change)="uploadFile($event)" />
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Glossary <span class="error_msg">*</span></label>
+                    <ckeditor formControlName="glossary" id="glossary" name="glossary" [config]="config"></ckeditor>
+                    <div *ngIf="contentForm.glossary.errors && contentForm.glossary.touched">
+                        <div *ngIf="contentForm.glossary.errors.required" class="createErrorMsg">Glossary is required
+                        </div>
+                    </div>
+                </div>
+
+                <div class="footer-nav">
+                    <div class="row">
+                        <div class="col-7">
+                            <button (click)="back();" class="btn btn-primary-themed  btn-sm" type="button"><i
+                                    class="fa fa-chevron-left"></i> Back</button>
+                        </div>
+                        <div class="col-5">
+                            <div class="float-right">
+                                <button (click)="preview(contentpreview);" class="btn btn-primary-themed  btn-sm"
+                                    type="button" [disabled]="contentHtmlForm.invalid">Preview</button> &nbsp;
+                                <button type="submit" class="btn btn-danger-themed btn-sm"
+                                    [disabled]="contentHtmlForm.invalid">Publish</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+    <ng-template #contentpreview let-modal>
+        <div class="modal-header">
+            <h4 class="form-section modal-title" id="modal-basic-title">Preview : ({{previewData.title}}) </h4>
+            <button type="button" class="btn btn-raised mr-2" (click)="closeModal('contentpreview')">
+                <i class="ft-x"></i>
+            </button>
+        </div>
+        <div class="modal-body">
+            <div class="preview-container">
+                <img class="preview-image" src="/assets/img/gallery/iPad_Landscape.png" />
+                <div class="preview-text-outer">
+                    <div class="preview-text-inner">
+                        <iframe [src]="previewData.content" title="Content" height="100%" width="100%"></iframe>
+                        <div class="row" id="previewContent" style="display: none;" >{{previewData | json }}</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </ng-template>
+
+</div>

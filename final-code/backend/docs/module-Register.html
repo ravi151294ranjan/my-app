@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Module: Register</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Module: Register</h1>
+
+    
+
+
+
+
+<section>
+
+<header>
+    
+        
+            
+        
+    
+</header>
+
+<article>
+    <div class="container-overview">
+    
+        
+            <div class="description">Token Genration module to perform File based operations.</div>
+        
+
+        
+            
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="routes_register.js.html">routes/register.js</a>, <a href="routes_register.js.html#line1">line 1</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+    <dt class="tag-see">See:</dt>
+    <dd class="tag-see">
+        <ul>
+            <li>UserModel *</li>
+        </ul>
+    </dd>
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+    
+    </div>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+        <h3 class="subsection-title">Methods</h3>
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="~registerUser"><span class="type-signature">(inner) </span>registerUser<span class="signature">(req, res, userStore)</span><span class="type-signature"> &rarr; {Object}</span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Sends a HTTP POST request to generate registerUser based on user credantial details.
+</br>
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>req</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The req object represents the HTTP request.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>res</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The res object represents the HTTP response.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>req.body</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The JSON payload. Its contain user details to create user.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>userStore</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">All parsed data is stored in userStore object</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>usermodel.validateUser()</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">function</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">This function is used to pass
+ userStore data from users routes to user model 
+to validate credantials and to generate tokens.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="routes_register.js.html">routes/register.js</a>, <a href="routes_register.js.html#line19">line 19</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    Its return success or failure message and user data.
+</div>
+
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Object</span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+
+
+        
+    
+
+    
+
+    
+</article>
+
+</section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-AdminDetails.html">AdminDetails</a></li><li><a href="module-Appconfig.html">Appconfig</a></li><li><a href="module-Asset%2520Model.html">Asset Model</a></li><li><a href="module-Assetmanage.html">Assetmanage</a></li><li><a href="module-AuthMiddleware.html">AuthMiddleware</a></li><li><a href="module-dashboard.html">dashboard</a></li><li><a href="module-DB%2520Connection.html">DB Connection</a></li><li><a href="module-ErrorLog.html">ErrorLog</a></li><li><a href="module-forgot%2520Model.html">forgot Model</a></li><li><a href="module-forgotPwd.html">forgotPwd</a></li><li><a href="module-Group.html">Group</a></li><li><a href="module-Group%2520Model.html">Group Model</a></li><li><a href="module-Register.html">Register</a></li><li><a href="module-Report.html">Report</a></li><li><a href="module-Report%2520Model.html">Report Model</a></li><li><a href="module-Scenario.html">Scenario</a></li><li><a href="module-Scenario%2520Model.html">Scenario Model</a></li><li><a href="module-ScenarioUser.html">ScenarioUser</a></li><li><a href="module-sendEmail%2520Model.html">sendEmail Model</a></li><li><a href="module-ShorturlGet.html">ShorturlGet</a></li><li><a href="module-SuperAdmin.html">SuperAdmin</a></li><li><a href="module-TenantDetails.html">TenantDetails</a></li><li><a href="module-TokenGenration.html">TokenGenration</a></li><li><a href="module-Upload.html">Upload</a></li><li><a href="module-URLShortner.html">URLShortner</a></li><li><a href="module-User.html">User</a></li><li><a href="module-User%252520Model.html">User Model</a></li><li><a href="module-WEBGL%2520Model.html">WEBGL Model</a></li></ul><h3>Global</h3><ul><li><a href="global.html#getAllAssetForUnity">getAllAssetForUnity</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.7</a> on Wed Jun 02 2021 15:41:57 GMT+0530 (India Standard Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

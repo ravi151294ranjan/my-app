@@ -1,0 +1,227 @@
+// @import "../../../../assets/sass/scss/gradient-variables";
+@import "../../../../assets/sass/scss/gradient-variables";
+
+h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
+  font-family: SourceSansPro !important;
+}
+
+//Donut Chart 1 CSS Starts
+
+:host ::ng-deep .donut1 .ct-label {
+    text-anchor: middle;
+    alignment-baseline: middle;
+    font-size: 60px;
+    fill: #009DA0;
+  }
+
+  :host ::ng-deep .donut1 .ct-outstanding .ct-slice-donut {
+    stroke: #eee;    
+  }
+
+  :host ::ng-deep .donut1 .ct-done .ct-slice-donut {
+    stroke: #009DA0;
+  }
+
+  //Donut Chart 1 CSS Ends
+
+  //Donut Chart 2 CSS Starts
+
+  :host ::ng-deep .donut2 .ct-label {
+    text-anchor: middle;
+    alignment-baseline: middle;
+    font-size: 60px;
+    fill: #FF8D60;
+  }
+
+  :host ::ng-deep .donut2 .ct-outstanding .ct-slice-donut {
+    stroke: #eee;    
+  }
+
+  :host ::ng-deep .donut2 .ct-done .ct-slice-donut {
+    stroke: #FF8D60;
+  }
+
+  //Donut Chart 2 CSS Ends
+
+  //Donut Chart 3 CSS Starts
+
+  :host ::ng-deep .donut3 .ct-label {
+    text-anchor: middle;
+    alignment-baseline: middle;
+    font-size: 60px;
+    fill: #FF586B;
+  }
+
+  :host ::ng-deep .donut3 .ct-outstanding .ct-slice-donut {
+    stroke: #eee;    
+  }
+
+  :host ::ng-deep .donut3 .ct-done .ct-slice-donut {
+    stroke: #FF586A;
+  }
+
+  //Donut Chart 3 CSS Ends
+
+   
+    // Donut Chart  CSS Ends
+    :host ::ng-deep .donut .ct-done .ct-slice-donut {
+      stroke: #0CC27E;
+      stroke-width: 24px !important;
+    }
+    :host ::ng-deep .donut .ct-progress .ct-slice-donut {
+      stroke: #FFC107;
+      stroke-width: 16px !important;
+    }
+    :host ::ng-deep .donut .ct-outstanding .ct-slice-donut {
+      stroke: #7E57C2;
+      stroke-width: 8px !important;
+    }
+    
+    :host ::ng-deep .donut .ct-started .ct-slice-donut {
+      stroke: #2196F3;
+      stroke-width: 32px !important;
+    }
+  
+    :host ::ng-deep .donut .ct-label {
+      text-anchor: middle;
+      alignment-baseline: middle;
+      font-size: 20px;
+      fill: #868e96;
+    }
+  
+    // Donut Chart  CSS Ends
+
+    
+  ::ng-deep .vjs-fluid {
+    overflow: hidden;
+  }
+  ::ng-deep .vjs-control-bar {
+    display: block;
+  }
+  ::ng-deep .vjs-control {
+    position: absolute;
+  }
+  ::ng-deep .vjs-progress-control {
+    left: 0;
+    width:  100%;
+  }
+  ::ng-deep .vjs-progress-holder  {
+    position: absolute;
+    left: 0; margin: 0;
+    height: 8px; width:  100%;
+  }
+  ::ng-deep .vjs-play-progress,
+  ::ng-deep .vjs-load-progress {
+    height: 8px;
+  }
+  ::ng-deep .vjs-play-progress:before {
+    font-size: 12px; top: -2px; 
+    text-shadow: 0 0 2px black 
+  }
+  ::ng-deep .vg-scrub-bar {
+    bottom: 10px;
+  }
+  ::ng-deep .vjs-time-divider {
+    // position: absolute;
+    // display: block;
+    // left: 70px;
+  }
+  ::ng-deep .vjs-remaining-time {
+    // display: none;   
+  }
+  ::ng-deep .vjs-duration {
+    // display: block;
+    // left: 70px;
+  }
+  ::ng-deep .vjs-volume-menu-button {
+    position: absolute;
+    bottom: 0; right: 55px;
+  }
+  
+  .close-button {
+    height: 35px;
+    width: 35px;
+    border: none;
+    display: inline-block;
+    // padding: 8px 16px;
+    // vertical-align: middle;
+    overflow: hidden;
+    text-decoration: none;
+    color: #fff;
+    background-color: inherit;
+    text-align: center;
+    cursor: pointer;
+    white-space: nowrap;
+    outline: none;;
+    box-shadow: none !important;
+    border-radius: 0px;
+  
+      i {
+        margin-left: 8px;
+        font-size: 15px;
+      }
+  }
+
+  .topright {
+    position: absolute;
+    right: 0;
+    top: 0;
+    background-image: linear-gradient("to left" , rgb(255, 255, 255) 40%, #264373 41%);
+    background-image: -o-linear-gradient("to left" , rgb(255, 255, 255) 50%, #264373 51%);
+    background-image: -moz-linear-gradient("to left" , rgb(255, 255, 255) 50%, #264373 51%);
+    background-image: -webkit-linear-gradient("to left" , rgb(255, 255, 255) 50%, #264373 51%);
+    background-image: -ms-linear-gradient("to left" , rgb(255, 255, 255) 50%, #264373 51%);
+    background-image: -webkit-gradient(
+      linear,
+      left bottom,
+      right top,
+      color-stop(0.5, rgb(255, 255, 255)),
+      color-stop(0.5, #264373)
+    );
+  }
+
+  .contentsContainer{
+    padding: 0px;
+
+    img{
+      margin: 0px !important;
+      border: 2px solid #ccc;
+    }
+  }
+
+  span.error_msg {
+    color:red;
+	font-size: 12px;
+}
+
+.imagePreview{
+  img{
+    width: 18vh;
+    height: 18vh;
+  }
+}
+  
+::ng-deep ng-select .ng-arrow {
+  top: 1vh !important;
+}
+
+::ng-deep ng-select .ng-arrow-wrapper{
+  min-height: inherit;
+  background-color: aliceblue;
+  padding-right: 0px !important;
+}
+
+::ng-deep ng-select.form-control{
+  border: none !important;
+  padding: 0px !important;
+}
+
+.loader {
+  border: 2px solid #f3f3f3;
+  border-radius: 50%;
+  border-top: 2px solid #3498db;
+  width: 10px;
+  height: 10px;
+  -webkit-animation: spin 2s linear infinite; /* Safari */
+  animation: spin 2s linear infinite;
+}

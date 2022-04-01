@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: routes/forgotPwd.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: routes/forgotPwd.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
+ * forgotPwd module to perform forgotPwd operations..
+ * @module forgotPwd
+ * @see {@link forgotPwd}
+ */
+
+var express = require('express');
+var router = express.Router();
+var util = require("../utils/util");
+var ObjectID = require('mongodb').ObjectID;
+var forgotPwdModel = require('../models/forgotModel')
+var emailNotification = require('../models/sendEmail')
+var crypto = require('crypto');
+var algorithm = 'aes256'; // or any other algorithm supported by OpenSSL
+var key = '789456123';
+var jwt = require('jsonwebtoken');
+/**
+ * Sends a HTTP post request for forgot password.
+ * &lt;/br>
+ * @function forgotPassword
+ * 
+ * @path {post} path /forgotPwd/forgotPassword
+ * @param req {Object} The req object represents the HTTP request.
+ * @param res {Object} The res object represents the HTTP response.
+ * @param {Function}  forgotPwdModel.forgotPassword() This function is used to pass data from forgotPwdModel 
+ * routes to forgotPassword model to send link in mail.
+ * @return {Object} Its retrun success or failure message.
+ */
+
+router.post('/forgotPassword', (req, res) => {
+    try {
+
+        const vSendForgotPwd = forgotPwdModel.createEncryptUrl('users', req.body.email)
+
+        vSendForgotPwd.then((data) => {
+            if (data.success) {
+                let emailId = [data.data[0].email]
+                let subject = `Forgot password request.`
+                let message = ``
+                let htmlMsg = 'Hello&lt;strong> ' + data.data[0].firstname + ' ' + data.data[0].lastname + `&lt;/strong>,&lt;br>&lt;br>Recently you had submitted a 
+             request you to reset your password.
+             If you did so, &lt;a href="${process.env.baseUrl}#/pages/passwordredirect/${data.encryptDataValue}">click here&lt;/a> 
+             to proceed with resetting your password.&lt;br/>&lt;br>Thanks,&lt;br>Admin&lt;br>&lt;br>`
+                var emailMsg = emailNotification.sendMailModel(emailId, subject, message, htmlMsg)
+                let dataSuccess = {
+                    success: true,
+                    status: 200,
+                    message: 'Mail sent successfully.'
+                }
+                res.status(200).send(dataSuccess)
+
+            } else {
+                res.status(200).send(data)
+            }
+        }).catch(err => {
+            util.writeLog(`${err} -> post forgotPassword Error`, 'post:/forgotPwd/forgotPassword');
+            var error = new Error();
+            error.success = false;
+            error.status = 404;
+            error.message = 'User email not found';
+            res.send(error);
+        })
+    } catch (err) {
+        util.writeLog(`${err} -> post forgotPassword catch Error`, 'post:/forgotPwd/forgotPassword');
+        var error = new Error();
+        error.success = false;
+        error.status = 404;
+        error.message = 'User email not found';
+        res.send(error);
+    }
+})
+
+
+router.post('/validateId', (req, res) => {
+    try {
+        const validateValue = forgotPwdModel.validateId('users', req.body)
+        validateValue.then((data) => {
+            res.send(data)
+        }).catch(err => {
+            util.writeLog(`${err} -> post validateId Error`, 'post:/forgotPwd/validateId');
+            var error = new Error();
+            error.success = false;
+            error.status = 404;
+            error.message = 'Link Not Valid';
+            res.send(error);
+        })
+    } catch (err) {
+        util.writeLog(`${err} -> post validateId Error`, 'post:/forgotPwd/validateId');
+        var error = new Error();
+        error.success = false;
+        error.status = 404;
+        error.message = 'An internal error occurred. Please try again later';
+        res.send(error);
+    }
+})
+
+router.post('/updatePassword', (req, res) => {
+    try {
+        var salt = '1234567890'; // default salt
+        var hash = crypto.pbkdf2Sync(req.body.password, salt, 1000, 24, 'sha512');
+        let parmsdata = {
+            password: (Buffer.from(hash).toString('hex')),
+            email: req.body.email
+        }
+        const updatePasswordValue = forgotPwdModel.updatePassword('users', parmsdata)
+
+        updatePasswordValue.then((data) => {
+            res.send(data)
+        }).catch(err => {
+            util.writeLog(`${err} -> post updatePassword Error`, 'post:/forgotPwd/updatePassword');
+            var error = new Error();
+            error.success = false;
+            error.status = 404;
+            error.message = 'Link Not Valid';
+            res.send(error);
+        })
+    } catch (err) {
+        util.writeLog(`${err} -> post updatePassword Error`, 'post:/forgotPwd/updatePassword');
+        var error = new Error();
+        error.success = false;
+        error.status = 404;
+        error.message = 'An internal error occurred. Please try again later';
+        res.send(error);
+    }
+})
+
+router.post('/changePasswordFirstLogin', (req, res) => {
+    try {
+        var salt = '1234567890'; // default salt
+        var hash = crypto.pbkdf2Sync(req.body.password, salt, 1000, 24, 'sha512');
+        let parmsdata = {
+            password: (Buffer.from(hash).toString('hex')),
+            email: req.body.email
+        }
+        const updatePasswordValue = forgotPwdModel.changePasswordFirstLogin('users', parmsdata)
+
+        updatePasswordValue.then((data) => {
+            res.send(data)
+        }).catch(err => {
+            util.writeLog(`${err} -> post changePasswordFirstLogin Error`, 'post:/forgotPwd/changePasswordFirstLogin');
+            var error = new Error();
+            error.success = false;
+            error.status = 404;
+            error.message = 'Link Not Valid';
+            res.send(error);
+        })
+    } catch (err) {
+        util.writeLog(`${err} -> post changePasswordFirstLogin Error`, 'post:/forgotPwd/changePasswordFirstLogin');
+        var error = new Error();
+        error.success = false;
+        error.status = 404;
+        error.message = 'An internal error occurred. Please try again later';
+        res.send(error);
+    }
+})
+
+router.post('/ProfilePasswordUpdate', (req, res) => {
+    try {
+        var salt = '1234567890'; // default salt
+        var hash = crypto.pbkdf2Sync(req.body.password, salt, 1000, 24, 'sha512');
+        let parmsdata = {
+            password: (Buffer.from(hash).toString('hex')),
+            email: req.body.email
+        }
+        const updatePasswordValue = forgotPwdModel.profilePasswordUpdate('users', parmsdata)
+
+        updatePasswordValue.then((data) => {
+            res.send(data)
+        }).catch(err => {
+            util.writeLog(`${err} -> post ProfilePasswordUpdate Error`, 'post:/forgotPwd/ProfilePasswordUpdate');
+            var error = new Error();
+            error.success = false;
+            error.status = 404;
+            error.message = 'Link Not Valid';
+            res.send(error);
+        })
+    } catch (err) {
+        util.writeLog(`${err} -> post ProfilePasswordUpdate Error`, 'post:/forgotPwd/ProfilePasswordUpdate');
+        var error = new Error();
+        error.success = false;
+        error.status = 404;
+        error.message = 'An internal error occurred. Please try again later';
+        res.send(error);
+    }
+})
+
+
+module.exports = router</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-AdminDetails.html">AdminDetails</a></li><li><a href="module-Appconfig.html">Appconfig</a></li><li><a href="module-Asset%2520Model.html">Asset Model</a></li><li><a href="module-Assetmanage.html">Assetmanage</a></li><li><a href="module-AuthMiddleware.html">AuthMiddleware</a></li><li><a href="module-dashboard.html">dashboard</a></li><li><a href="module-DB%2520Connection.html">DB Connection</a></li><li><a href="module-ErrorLog.html">ErrorLog</a></li><li><a href="module-forgot%2520Model.html">forgot Model</a></li><li><a href="module-forgotPwd.html">forgotPwd</a></li><li><a href="module-Group.html">Group</a></li><li><a href="module-Group%2520Model.html">Group Model</a></li><li><a href="module-Register.html">Register</a></li><li><a href="module-Report.html">Report</a></li><li><a href="module-Report%2520Model.html">Report Model</a></li><li><a href="module-Scenario.html">Scenario</a></li><li><a href="module-Scenario%2520Model.html">Scenario Model</a></li><li><a href="module-ScenarioUser.html">ScenarioUser</a></li><li><a href="module-sendEmail%2520Model.html">sendEmail Model</a></li><li><a href="module-ShorturlGet.html">ShorturlGet</a></li><li><a href="module-SuperAdmin.html">SuperAdmin</a></li><li><a href="module-TenantDetails.html">TenantDetails</a></li><li><a href="module-TokenGenration.html">TokenGenration</a></li><li><a href="module-Upload.html">Upload</a></li><li><a href="module-URLShortner.html">URLShortner</a></li><li><a href="module-User.html">User</a></li><li><a href="module-User%252520Model.html">User Model</a></li><li><a href="module-WEBGL%2520Model.html">WEBGL Model</a></li></ul><h3>Global</h3><ul><li><a href="global.html#getAllAssetForUnity">getAllAssetForUnity</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.7</a> on Wed Jun 02 2021 15:41:57 GMT+0530 (India Standard Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

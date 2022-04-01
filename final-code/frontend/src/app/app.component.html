@@ -1,0 +1,56 @@
+<!-- <div *ngIf="noInternetConnection" style="text-align: center;">    
+    
+    <img width="111px" src="assets/img/int2.png" alt="Wifi Disconnected" />    
+</div>    
+<div *ngIf="!noInternetConnection" style="text-align: center;">     
+    
+     <img width="111px" src="assets/images/wifi.png" alt="Wifi Connecred" />     
+</div>     -->
+<!-- <div style="
+position: fixed;
+left: 0;
+top: 0;
+width: 100%;
+height: 100%;
+background-color: #fff;
+opacity: 0.2;
+z-index: 1000;
+" class="spinner_overlay"></div> -->
+<div *ngIf="noInternetConnection" style="text-align: center;">    
+    <div style="
+position: fixed;
+left: 0;
+top: 0;
+width: 100%;
+height: 100%;
+background-color: currentColor;;
+opacity: 0.9;
+z-index: 1000;
+" class="spinner_overlay">
+
+
+<section id="taskboard" >
+    <div class="row">
+      <div class=" col-4">
+      </div>
+      <div class=" col-4">
+        <h4 class="ml-2 mt-2 text-bold-500 text-left"></h4>
+        <div class='dragdrop-container' id="New">
+          <div>
+            <div class="card">
+              <div class="card-body  text-center">
+                <img width="111px" src="assets/img/ofline.png" alt="Internet Disconnected" />  
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class=" col-4">
+      </div>
+    </div>
+  </section>
+  
+  
+</div>    
+</div>  
+<router-outlet></router-outlet>

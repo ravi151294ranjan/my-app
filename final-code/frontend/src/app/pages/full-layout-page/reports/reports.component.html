@@ -1,0 +1,243 @@
+<!-- <button (click)='AddTodo()'>click</button>
+ <a [href]="fileUrl" download="forgot.png">DownloadFile</a> -->
+
+
+
+<form action="" class="form" [formGroup]="rptDrGroup">
+  <div class="col-md-12 mb-2" *ngIf="userInfo.role == 1">
+    <label style="color:#FFFFFF;" for="projectinput6">Users </label>
+    <ng-select [items]="userData" (change)="selectChangeHandler($event)" bindValue="_id" bindLabel="name"
+      placeholder="Select User" [(ngModel)]="selectedUser" [ngModelOptions]="{standalone: true}">
+    </ng-select>
+    <!-- <select (change)="selectChangeHandler($event)" id="projectinput6" formControlName="user" class="form-control">
+    <option value="" disabled>Select User</option>
+    <option *ngFor="let user of userData" value={{user._id}}>{{user.firstname}} {{user.lastname}}</option>
+  </select> -->
+    <div class="p-1 mb-2 mt-2 text-danger "
+      *ngIf="rptDrGroup.controls.user.invalid  &&  (rptDrGroup.controls.user.touched)">
+      User Selection is required
+    </div>
+  </div>
+  <div class="col-md-12 mb-2">
+    <label style="color:#ffffff;" for="projectinput6">Scenarios </label>
+    <ng-select [items]="scenarioList" (change)="changeScenarioDrop($event)" bindLabel="Title" bindValue="_id"
+      placeholder="Select Scenario" [(ngModel)]="selectedScenario" [ngModelOptions]="{standalone: true}">
+    </ng-select>
+    <!-- <select (change)="changeScenarioDrop($event)" id="projectinput6" formControlName="scenario" class="form-control">
+    <option value="" disabled>Select Scenario</option>
+    <option *ngFor="let scenario of scenarioList" value={{scenario._id}}>{{scenario.Title}}</option>
+  </select> -->
+    <div class="p-1 mb-2 mt-2 text-danger "
+      *ngIf="rptDrGroup.controls.scenario.invalid  &&  (rptDrGroup.controls.scenario.touched)">
+      Scenario Selection is required
+    </div>
+  </div>
+</form>
+
+<div [hidden]="!isShow" class="row">
+  <div class="col-4">
+    <div class="row-12">
+      <div class="card">
+        <div class="card-content">
+          <div style="text-align: center;margin: 16px;border: 2px solid blue;
+          padding: 10px;
+          border-radius: 25px;">{{scenarioName}}</div>
+          <div style="text-align: center;">
+            <i class="ft-user font-medium-3 blue-grey">
+            </i>
+            {{userName}}
+          </div>
+          <figure class="highcharts-figure">
+            <div id="Barcontainer"></div>
+          </figure>
+
+        </div>
+
+      </div>
+    </div>
+    <div class="row-12">
+      <div class="card">
+        <div class="card-content">
+          <figure class="highcharts-figure">
+            <div id="Gaugecontainer"></div>
+          </figure>
+
+          <div class="box">
+            <div style="width: 10px;height: 10px; margin-left: 20%;" class="red"></div>
+            <div>Beginner</div>
+            <div>*>{{res.beginnerRange.min}}</div>
+          </div>
+          <div class="box">
+            <div style="width: 10px;height: 10px; margin-left: 20%;" class="yellow"></div>
+            <div>Intermediate</div>
+            <div>{{res.intermediateRange.min}}-{{res.intermediateRange.max}}</div>
+          </div>
+          <div class="box">
+            <div style="width: 10px;height: 10px; margin-left: 20%;" class="green"></div>
+            <div>Expert</div>
+            <div>{{res.expertRange.min}}-{{res.expertRange.max}}</div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-8">
+    <div class="card">
+      <div class="card-content">
+        <div class="card-body">
+          <figure class="highcharts-figure">
+            <div id="container"></div>
+          </figure>
+
+          <!-- <section style="border: 0.5px solid">
+            <div class="tbl-header">
+              <table>
+                <thead style="border: 0.5px solid">
+                  <tr>
+                    <th>Steps</th>
+                    <th style="border: 0.5px solid">Time(m)</th>
+                    <th>Attempts</th>
+                  </tr>
+                </thead>
+              </table>
+            </div>
+            <div class="tbl-content">
+              <table>
+                <tbody>
+                  <tr *ngFor="let attempt of res.AttemptsData">
+                    <td>{{attempt.step }}</td>
+                    <td >{{attempt.timeTaken}}</td>
+                    <td>{{attempt.attemptsCount}}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="tbl-header">
+              <table>
+                <thead >
+                  <tr style="border: 0.5px solid">
+                    <th>Total</th>
+                    <th>{{timeTakenAll}}</th>
+                    <th>{{totalAttempt}}</th>
+                  </tr>
+                  <tr style="border: 0.5px solid">
+                    <th>Warnings</th>
+                    <th></th>
+                    <th>{{warnings}}</th>
+                  </tr>
+                </thead>
+              </table>
+            </div>
+          </section> -->
+
+
+
+
+          <!-- <section style="border: 0.5px solid">
+            <div class="tbl-header">
+              <table>
+                <thead style="border: 0.5px solid">
+                  <tr>
+                    <th style="border: 0.5px solid">Steps</th>
+                    <th style="border: 0.5px solid">Time(m)</th>
+                    <th >Attempts</th>
+                  </tr>
+                </thead>
+              </table>
+            </div>
+            <div class="tbl-content ">
+              <table>
+                <tbody >
+                  <tr *ngFor="let attempt of res.AttemptsData">
+                    <td>{{attempt.step }}</td>
+                    <td >{{attempt.timeTaken}}</td>
+                    <td>{{attempt.attemptsCount}}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="tbl-header">
+              <table>
+                <thead >
+                  <tr style="border: 0.5px solid">
+                    <th>Total</th>
+                    <th>{{timeTakenAll}}</th>
+                    <th>{{totalAttempt}}</th>
+                  </tr>
+                  <tr style="border: 0.5px solid">
+                    <th>Warnings</th>
+                    <th></th>
+                    <th>{{warnings}}</th>
+                  </tr>
+                </thead>
+              </table>
+            </div>
+          </section> -->
+
+
+          <section>
+            <div id="table-scroll" class="table-scroll">
+              <table id="main-table" class="main-table">
+                <thead>
+                  <tr>
+                    <th scope="col">Steps</th>
+                    <th scope="col">Time</th>
+                    <th scope="col">Attempts</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let attempt of reportTableData">
+                    <td>{{attempt.step }}</td>
+                    <td>{{attempt.timeTaken}}</td>
+                    <td>{{attempt.attemptsCount}}</td>
+                  </tr>
+                </tbody>
+                <tfoot>
+                  <tr>
+                    <th>Total</th>
+                    <td>{{timeTakenValue_detailed}}</td>
+                    <td>{{totalAttempt}}</td>
+                  </tr>
+                  <tr>
+                    <th>Warnings</th>
+                    <td></td>
+                    <td>{{warnings}}</td>
+                  </tr>
+                </tfoot>
+ 
+              </table>
+              
+            </div>
+          </section>
+
+
+
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+</div>
+
+
+
+<section id="extended" *ngIf='!noReportsShow'>
+  <div class="col-sm-12 col-md-4" style="margin-left: 30%;">
+    <div class="card">
+      <div class="card-header">
+        <div class="card-content">
+          <div class="card-body">
+            <form style="margin-left: 26%;margin-top: -15px; ">
+              {{noScenarioMsg}}
+            </form>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+</section>

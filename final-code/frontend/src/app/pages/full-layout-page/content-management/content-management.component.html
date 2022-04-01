@@ -1,0 +1,302 @@
+  <div class="row padding-top-10">
+    <div class="col-3 search-title">
+      <i class="card-title icon-add-content font-large-1 float-left"></i>
+      <h4 class="card-title alignleft">&nbsp;&nbsp;Content Management</h4>
+    </div>
+    <div class="col-8">
+      <input type='text' class="contentsearch" #contentsearch placeholder='Search' [disabled]='disableTextbox'
+        (input)="onSearchChange($event.target.value)" />
+    </div>
+    <div class="col-1 text-right-align">
+      <button type="button" class="btn btn-round mr-1 btn-fab fixed-button alignright btn-design font-size-20" placement="left"
+        ngbTooltip="Create Content" (click)="openIntermdiatePage(createContent)"><span
+          class="icon-add-content"></span></button>
+    </div>
+  </div>
+  <div class="row mt-2">
+    <div class="col-4"></div>
+    <div class="col-3">
+      <!-- <toggle-button (changed)='filterContentsByStatus($event)' *ngIf="isAdmin"> </toggle-button> -->
+      <ng-select style="max-width: 100% !important;" class="text-capital" *ngIf="isAdmin" [(ngModel)]="filterContentStatus" [multiple]="true" [clearable]="false" (change)='filterContentsByStatus($event)'>
+        <ng-option *ngFor="let contentStatusName of contentStatusList" [value]="contentStatusName">{{contentStatusName}}</ng-option>
+      </ng-select>
+    </div>
+    <div class="col-5 text-right padding-right-25">
+      <ng-select [(ngModel)]="filterList" class="filterDesign filter-type" [multiple]="true" [clearable]="false"
+        (change)="filter($event)">
+        <ng-option *ngFor="let content of contentType" [value]="content">{{content}}</ng-option>
+      </ng-select>
+      <i class="fa fa-filter faDesigns" placement="top" ngbTooltip="Filter Content" aria-hidden="true"></i>
+      <i class="fa fa-th faDesigns" (click)="contentView('grid')" placement="top" ngbTooltip="Grid View"
+        aria-hidden="true"></i>
+      <i class="fa fa-list faDesigns" (click)="contentView('list')" placement="top" ngbTooltip="List View"
+        aria-hidden="true"></i>
+    </div>
+  </div>
+  <!-- Grid View Starts -->
+  <section id="taskboard" *ngIf='taskbarView'>
+    <div class="row">
+      <div class=" col-4" *ngFor='let content of contentRes'>
+        <div class='' id="New">
+          <div>
+            <div class="card">
+              <div class="card-body pt-3 text-left">
+                <div class="clearfix">
+                  <h4 class="float-left content-title" placement="right" tooltipClass="contentlistTooltip"
+                    ngbTooltip="
+                  {{ (content.description)?(content.description.length>300)? (content.description | stripTags | slice:0:300 )+'..':(content.description | stripTags):'N/A' }}">
+                    {{ (content.title)?(content.title.length>25)? (content.title | slice:0:25)+'..':(content.title):'N/A' }}
+                  </h4>
+                  <div class="actions float-right">
+                    <i class="fa fa-ban" *ngIf="!content.is_modify" placement="left" ngbTooltip="Access Restricted"></i>
+                    <i class="ft-edit cursor-pointer mr-1 " *ngIf="content.is_modify" placement="left"
+                      ngbTooltip="Edit Content" (click)='contentEdit(versionEditPopup, content);'></i>
+                    <i class="ft-trash-2 cursor-pointer mr-1 color-black" *ngIf="content.is_modify"
+                      placement="left" ngbTooltip="Delete Content" (click)="contentDelete(deleteContent,content);"></i>
+                    <i class="ft-eye cursor-pointer color-black" *ngIf="content.is_modify" placement="left"
+                      ngbTooltip="Preview Content" (click)="preview(contentpreview, content);"></i>
+                  </div>
+                </div>
+                <div class="userDetailsDiv">
+                  <span class="content-card">Type: {{(content.type)?content.type:'N/A'}}</span><br />
+                  <span class="content-card">Language: {{(content.language)?content.language:'N/A'}} </span><br />
+                  <span class="content-card">Creator: {{(content.contentCreator)?content.contentCreator:'N/A'}} </span><br />
+                  <span class="content-card">Created At: {{(content.createdAt)?(content.createdAt | date:'dd-MM-yyyy h:mm:ss
+                    a'):'N/A'}}</span><br /><br />
+                  <i *ngIf="content.recordStatus == 'active'" title="Status: Active" class="fa fa-check mr-1"></i>
+                  <i *ngIf="content.recordStatus == 'inactive'" title="Status: Inactive" class="fa fa-times mr-1"></i>
+                  <i *ngIf="content.recordStatus == 'draft'" title="Status: Draft" class="fa fa-battery-half mr-1"></i>
+                  <i *ngIf="content.type == 'HTML'" title="Type: HTML" class="icon-html-content mr-1"></i>
+                  <i *ngIf="content.type == 'Imported HTML'" title="Type: Imported HTML" class="fa fa-html5 mr-1"></i>
+                  <i *ngIf="content.type == 'Video'" title="Type: Video" class="fa fa-video-camera mr-1"></i>
+                  <i title="Language: {{(content.language)?content.language:'N/A'}}" class="fa fa-language mr-1"></i>
+                  <span class="defaultVersion float-right" *ngIf="content.defaultVersion" title="Default Version: {{(content.defaultVersion)?content.defaultVersion:'N/A'}}">
+                    Default Version: {{(content.defaultVersion)?content.defaultVersion:'N/A'}}
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="search-results" infinite-scroll [infiniteScrollDistance]="scrollDistance"
+        [infiniteScrollUpDistance]="scrollUpDistance" [infiniteScrollThrottle]="throttle" (scrolled)="onScrollDown()">
+      </div>
+    </div>
+  </section>
+  <section id="taskboard" *ngIf='contentRes.length==0'>
+    <div class="row">
+      <div class=" col-4">
+      </div>
+      <div class=" col-4">
+        <h4 class="ml-2 mt-2 text-bold-500 text-left"></h4>
+        <div class='dragdrop-container' id="New">
+          <div>
+            <div class="card">
+              <div class="card-body  text-center">
+               No Content(s) found
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class=" col-4">
+      </div>
+    </div>
+  </section>
+  <!-- Grid View Ends -->
+  <!-- List View Starts -->
+  <section id="extended" *ngIf='!taskbarView && contentRes.length'>
+    <div class="row text-left">
+      <div class="col-sm-12">
+        <div class="card">
+          <div class="card-header">
+          </div>
+          <div class="card-content">
+            <div class="card-body">
+              <form>
+                <table class="table table-responsive-md">
+                  <thead>
+                    <tr>
+                      <th id="0">S.No</th>
+                      <th class="cursor-pointer" id="1" (click)="setOrder('title')"
+                        [ngClass]="{'active': order=='title'}">Content Title
+                        <span [hidden]="reverse">▼</span>
+                        <span [hidden]="!reverse">▲</span>
+                      </th>
+                      <th class="cursor-pointer" id="2" (click)="setOrder('type')"
+                        [ngClass]="{'active': order=='type'}">Type
+                        <span [hidden]="reverse">▼</span>
+                        <span [hidden]="!reverse">▲</span>
+                      </th>
+                      <th class="cursor-pointer" id="3" (click)="setOrder('language')"
+                        [ngClass]="{'active': order=='language'}">Language
+                        <span [hidden]="reverse">▼</span>
+                        <span [hidden]="!reverse">▲</span>
+                      </th>
+                      <th class="cursor-pointer" id="5" (click)="setOrder('contentCreator')"
+                        [ngClass]="{'active': order=='contentCreator'}">Creator
+                        <span [hidden]="reverse">▼</span>
+                        <span [hidden]="!reverse">▲</span>
+                      </th>
+                      <th id="5">Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let content of contentRes  | orderBy: order:reverse:'case-insensitive';let i= index ">
+                      <td>{{ (sno - 1) * 5 + i +1 }}</td>
+                      <td class="text-capital"><span placement="right" tooltipClass="contentlistTooltip"
+                        ngbTooltip="
+                        {{ (content.description)?(content.description.length>300)? (content.description | stripTags | slice:0:300 )+'..':(content.description | stripTags):'N/A' }}">
+                          {{ (content.title)?(content.title.length>25)? (content.title | slice:0:25)+'..':(content.title):'N/A' }}
+                        </span>
+                        <br/>
+                        <span class="defaultVersion" *ngIf="content.defaultVersion" title="Default Version: {{(content.defaultVersion)?content.defaultVersion:'N/A'}}">
+                          Default Version: {{(content.defaultVersion)?content.defaultVersion:'N/A'}}
+                        </span>
+                      </td>
+                      <td>{{(content.type)?content.type:'N/A'}}</td>
+                      <td>{{(content.language)?content.language:'N/A'}}</td>
+                      <td>{{(content.contentCreator)?content.contentCreator:'N/A'}} <br />
+                        <span class="font-size-12">
+                          Created At: {{(content.createdAt)?(content.createdAt | date:'dd-MM-yyyy h:mm:ss a'):'N/A'}}
+                        </span>
+                      </td>
+                      <td>
+                        <a class="success p-0" data-original-title="" title="">
+                          <i class="fa fa-ban color-red" placement="left" *ngIf="!content.is_modify"
+                            ngbTooltip="Access Restricted"> </i>
+                        </a>
+                        <a class="success p-0" data-original-title="" title="">
+                          <i class="ft-edit-2 font-medium-3 mr-2" placement="left" *ngIf="content.is_modify"
+                            ngbTooltip="Edit Content" (click)='contentEdit(versionEditPopup, content);'> </i>
+                        </a>
+                        <a class="danger p-0" data-original-title="" title="">
+                          <i class="ft-x font-medium-3 mr-2" placement="left" *ngIf="content.is_modify"
+                            ngbTooltip="Delete Content" (click)="contentDelete(deleteContent,content)"></i>
+                        </a>
+                        <a class="danger p-0" data-original-title="" title="">
+                          <i class="ft-eye cursor-pointer color-black" *ngIf="content.is_modify"
+                            placement="left" ngbTooltip="Preview Content" (click)="preview(contentpreview, content);"></i>
+                        </a>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+                <div class="search-results" infinite-scroll [infiniteScrollDistance]="scrollDistance"
+                  [infiniteScrollUpDistance]="scrollUpDistance" [infiniteScrollThrottle]="throttle"
+                  (scrolled)="onScrollDown()">
+                </div>
+              </form>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- List View Ends -->
+<!-- Delete FORM -->
+  <ng-template #deleteContent let-modal>
+    <div class="modal-header">
+      <h4 class="modal-title" id="modal-basic-title">The deletion of content may cause data lose for the linked
+        user(s).<br />
+        Still do you want to delete the selected content ?</h4>
+      <button type="button" class="btn btn-raised close-button topright" aria-label="Close"
+        (click)="modal.dismiss('Cross click');">
+        <i class="ft-x"></i>
+      </button>
+    </div>
+    <div class="modal-footer">
+      <form [formGroup]="deleteContentForm" (ngSubmit)="deleteContentFormSubmit()">
+        <div class="form-group">
+          <input type="hidden" class="form-control" formControlName="contentId" name="contentId" />
+          <input type="hidden" class="form-control" formControlName="contentType" name="contentType" />
+        </div>
+        <div>
+          <button type="submit" class="btn btn-danger-themed">Delete</button>
+          <button type="button" class="btn btn-danger-themed" aria-label="Close"
+            (click)="modal.dismiss('Cross click');">Cancel</button>
+        </div>
+      </form>
+    </div>
+  </ng-template>
+<!-- INTERMEDIATE PAGE -->
+  <ng-template #createContent let-modal>
+    <div class="modal-header border-bottom-0 intermediage-page-bg">
+      <button type="button" class="btn btn-raised close-button topright" aria-label="Close"
+        (click)="modal.dismiss('Cross click');">
+        <i class="ft-x"></i>
+      </button>
+    </div>
+    <div class="modal-body intermediage-page-bg intermediate-page-modal-height">
+      <div id="intermediage-page" class="intermediage-page-align">
+        <div (click)="closeModal('intermediage-page')" class="item" routerLink="/html-content">
+          <div class="icon-bg">
+            <i class="icon-html-content font-size-70"></i>
+          </div>
+          <span class="caption">
+            HTML
+          </span>
+        </div>
+        <div (click)="closeModal('intermediage-page')" class="item" routerLink="/video-content">
+          <div class="icon-bg">
+            <i class="icon-video-content font-size-70"></i>
+          </div>
+          <span class="caption">
+            Video
+          </span>
+        </div>
+        <div (click)="closeModal('intermediage-page')" class="item" routerLink="/imported-html-content">
+          <div class="icon-bg">
+            <i class="icon-imported-html-content font-size-70"></i>
+          </div>
+          <span class="caption">
+            Imported HTML
+          </span>
+
+        </div>
+      </div>
+    </div>
+  </ng-template>
+
+
+  <!-- Version Edit POPUP PAGE -->
+  <ng-template #versionEditPopup let-modal>
+    <div class="modal-header">
+      <h4 class="form-section modal-title" id="modal-basic-title">Version Edit </h4>
+      <button type="button" class="btn btn-raised mr-2" (click)="closeModal('versionEditPopup')">
+          <i class="ft-x"></i>
+      </button>
+  </div>
+  <div class="modal-body">
+    <label class="defaultVersion">Kindly select atleast one version to edit.</label>
+    <div class="list-group-item"  *ngFor="let item of versionList; let i = index">
+      <input [(ngModel)]="selectedVersion"  type="radio" name="versionName" value="{{item}}" /> 
+     Version : {{item}}
+    </div>
+    <br/>
+    <button (click)="versionEdit()" *ngIf="selectedVersion" type="button" class="btn btn-danger-themed btn-sm float-right">Continue</button>
+  </div>
+  </ng-template>
+
+ <!-- PreView content in Listing Page-->
+  <ng-template #contentpreview let-modal>
+    <div class="modal-header border-bottom-0">
+        <button type="button" class="btn btn-raised close-button topright color-black" aria-label="Close"
+          (click)="modal.dismiss('Cross click');">
+          <i class="ft-x"></i>
+        </button>
+      </div>
+    <div class="modal-body">
+        <div class="preview-container-popup">
+            <img class="preview-image-popup" src="/assets/img/gallery/iPad_Landscape.png" />
+            <div class="preview-text-outer-popup">
+                <div class="preview-text-inner-popup">
+                    <iframe [src]="previewPath" title="Content" frameborder="0" height="100%" width="100%"></iframe>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</ng-template>

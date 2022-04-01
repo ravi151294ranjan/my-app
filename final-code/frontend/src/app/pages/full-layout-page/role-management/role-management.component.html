@@ -1,0 +1,42 @@
+<div class="row mt-2">
+  <div class="col-6">
+    <h4> <b>Create new role</b></h4>
+    <form [formGroup]="addRoleForm" (ngSubmit)="addRoleFormSubmit()">
+      <div class="form-group">
+        <label for="newrolename">Role Name <span style="color: red;">*</span></label>
+        <input type="text" class="form-control" placeholder="Enter Role Name" formControlName="name" />
+        <div *ngIf="addRoleTriggered && addRoleFormData.name.errors">
+          <div *ngIf="addRoleFormData.name.errors.required"><label style="color:red">Enter role name</label></div>
+        </div>
+      </div>
+      <button type="submit" class="btn btn-danger-themed">Add</button>
+    </form>
+  </div>
+
+  <div class="col-6 editRoleDiv">
+    <h4><b>Edit role</b></h4>
+    <form [formGroup]="renameRoleForm" (ngSubmit)="renameRoleFormSubmit()">
+      <div class="form-group">
+        <label>Choose Role <span style="color: red;">*</span></label>
+        <ng-select formControlName="name" [clearable]="false">
+          <ng-option value="">Select Role</ng-option>
+          <ng-option *ngFor="let role of roles" [value]="role">{{role}}</ng-option>
+        </ng-select>
+        <div *ngIf="renameRoleTriggered && renameRoleFormData.name.errors">
+          <div *ngIf="renameRoleFormData.name.errors.required"><label style="color:red">Choose role to rename</label>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="newname">Role Name <span style="color: red;">*</span></label>
+        <input type="text" class="form-control" placeholder="Enter Role Name" formControlName="newname" />
+        <div *ngIf="renameRoleTriggered && renameRoleFormData.newname.errors">
+          <div *ngIf="renameRoleFormData.newname.errors.required"><label style="color:red">Enter role name</label></div>
+        </div>
+      </div>
+
+      <button type="submit" class="btn btn-danger-themed">Update</button>
+    </form>
+  </div>
+</div>

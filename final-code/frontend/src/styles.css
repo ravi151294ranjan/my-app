@@ -1,0 +1,71 @@
+/* You can add global styles to this file, and also import other style files */
+/* You can add global styles to this file, and also import other style files */
+
+/* @import url("assets/css/bootstrap.min.css"); */
+/* @import url("../src/assets/css/prism.min.css");
+@import url("../src/assets/css/sweetalert2.min.css");
+@import url("../src/assets/css/bootstrap-timepicker.min.css");
+@import url("../src/assets/css/wizard.css");
+@import url("../src/assets/css/leaflet.css");
+@import url("../src/assets/css/jquery-jvectormap-2.0.3.css");
+@import url("../src/assets/css/ng2-toastr.min.css");
+@import url("../src/assets/css/nouislider.min.css");
+@import url("../src/assets/css/data-table/index.css");
+@import url("../src/assets/css/data-table/icons.css");
+@import url("../src/assets/css/demo.css"); */
+@import "~@ng-select/ng-select/themes/default.theme.css";
+
+@font-face {
+    font-family: SourceSansPro;
+    src: url('../src/assets/fonts/NetappFont/Arial.ttf') format("truetype"),
+    url('../src/assets/fonts/NetappFont/SourceSansPro-Black.ttf') format("truetype"),
+    url('../src/assets/fonts/NetappFont/SourceSansPro-BlackItalic.ttf') format("truetype"),
+    url('../src/assets/fonts/NetappFont/SourceSansPro-Bold.ttf') format("truetype"),
+    url('../src/assets/fonts/NetappFont/SourceSansPro-ExtraLight.ttf') format("truetype"),
+    url('../src/assets/fonts/NetappFont/SourceSansPro-ExtraLightItalic.ttf') format("truetype"),
+    url('../src/assets/fonts/NetappFont/SourceSansPro-Italic.ttf') format("truetype"),
+    url('../src/assets/fonts/NetappFont/SourceSansPro-Light.ttf') format("truetype"),
+    url('../src/assets/fonts/NetappFont/SourceSansPro-LightItalic.ttf') format("truetype"),
+    url('../src/assets/fonts/NetappFont/SourceSansPro-Regular.ttf') format("truetype"),
+    url('../src/assets/fonts/NetappFont/SourceSansPro-Semibold.ttf') format("truetype"),
+    url('../src/assets/fonts/NetappFont/SourceSansPro-SemiboldItalic.ttf') format("truetype");
+
+  }
+
+html, body { height: 100%; }
+
+body { margin: 0; font-family: SourceSansPro !important;background-image: url('/assets/img/gallery/inner-bg.png'); }
+* {
+    font-family: SourceSansPro ;
+  }
+
+
+
+.singleselect .multiselect-item-checkbox {
+  padding: 0px !important;
+  }
+  .singleselect input[type=checkbox]+div:before {
+  display: none !important;
+  }
+  
+  .singleselect input[type=checkbox]+div:after {
+  display: none !important;
+  }
+  
+  .singleselect input[type=checkbox]+div {
+  padding: 6px 10px !important;
+  }
+  
+  .singleselect input[type=checkbox]:checked+div {
+  background-color: #337ab7 !important;
+  color: #fff !important;
+  }
+  
+  /* @import "~@ng-select/ng-select/themes/default.theme.css";
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; } */
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }

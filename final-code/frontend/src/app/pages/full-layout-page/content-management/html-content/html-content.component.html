@@ -1,0 +1,125 @@
+<div class="container">
+    <div class="col-12">
+        <div class="row">
+            <div class="title col-8">HTML Content</div> 
+            <div *ngIf="selectedVersion" class="defaultVersion col-2">Selected Version : {{selectedVersion}}</div>
+            <div *ngIf="currentVersion" class="defaultVersion col-2">Current Version : {{currentVersion}}</div>
+        </div>      
+        <div style="float: right;" *ngIf="autoLoading">
+            <i class="fa fa-circle-o-notch fa-spin" style="font-size:15px"></i>&nbsp;&nbsp;<span style="color:'#264373';font-size:15px;">Auto saving...</span>
+        </div>
+        <form [formGroup]="contentHtmlForm" (ngSubmit)="onSubmit()">
+            <div id="step1" *ngIf="!showSecondStepForm">
+                <div class="form-group">
+                    <label>Title <span class="error_msg">*</span></label>
+                    <input type="text" maxlength="50" class="form-control" placeholder="" id="title" name="title"
+                        formControlName="title" (change)="onValidateStep1()" />
+                    <div *ngIf="contentForm.title.errors && contentForm.title.touched">
+                        <div *ngIf="contentForm.title.errors.required" class="createErrorMsg">Title is required</div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Overview <span class="error_msg">*</span></label>
+                    <ckeditor (change)="onValidateStep1()"  formControlName="description" name="description" id="description" [config]="config">
+                    </ckeditor>
+                    <div *ngIf="contentForm.description.errors && contentForm.description.touched">
+                        <div *ngIf="contentForm.description.errors.required" class="createErrorMsg">Overview is required
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Language</label>
+                    <ng-select class="langdrpdown" formControlName="language" name="language" id="language" [clearable]="false">
+                        <ng-option *ngFor="let lang of languageList" [value]="lang.name">{{lang.name}}</ng-option>
+                    </ng-select>
+                </div>
+               
+                <div class="footer-nav">                  
+                    <div class="grid nogutter justify-end">
+                    <button (click)="cancel();" class="btn btn-primary-themed  btn-sm" type="button"><i
+                        class="fa fa-chevron-left"></i> Cancel </button> &nbsp;
+                        
+<button [disabled]="!isNextBtnEnable"  (click)="next();" class="btn btn-primary-themed  btn-sm" type="button">Save & Proceed <i
+class="fa fa-chevron-right"></i></button>
+                    </div>
+                </div>
+            </div>
+
+
+            <div id="step2" *ngIf="showSecondStepForm">
+                
+                <div class="form-group">
+                    <label>Content Image <span class="error_msg">*</span></label>
+                    <div class="form-group">
+                        <input class="form-control package-inline" type="text" readonly placeholder="Image File"
+                            formControlName="uploadImage"
+                            [ngClass]="{ 'is-invalid': contentForm.uploadImage.errors && contentForm.uploadImage.touched }" />
+                        <label class="btn btn-danger-themed btn-sm margin-top-10" [style]="pointerEvents"
+                            for="contentImage">Upload</label>
+                        <div *ngIf="contentForm.uploadImage.errors" class="invalid-feedback">
+                            <div *ngIf="contentForm.uploadImage.errors.required">Content Image is required</div>
+                        </div>
+
+                        <input id="contentImage" class="display-none" type="file" formControlName="contentImage"
+                            (change)="uploadFile($event)" />
+                    </div>
+                </div>
+
+
+                <div class="form-group">
+                    <label>Content <span class="error_msg">*</span></label>
+                    <ckeditor formControlName="content" name="content" id="content" [config]="config"></ckeditor>
+                    <div *ngIf="contentForm.content.errors && contentForm.content.touched">
+                        <div *ngIf="contentForm.content.errors.required" class="createErrorMsg">Content is required
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Glossary <span class="error_msg">*</span></label>
+                    <ckeditor formControlName="glossary" id="glossary" name="glossary" [config]="config"></ckeditor>
+                    <div *ngIf="contentForm.glossary.errors && contentForm.glossary.touched">
+                        <div *ngIf="contentForm.glossary.errors.required" class="createErrorMsg">Glossary is required
+                        </div>
+                    </div>
+                </div>
+
+                <div class="footer-nav">
+                    <div class="row">
+                        <div class="col-7">
+                            <button (click)="back();" class="btn btn-primary-themed  btn-sm" type="button"><i
+                                    class="fa fa-chevron-left"></i> Back</button>
+                        </div>
+                        <div class="col-5">
+                            <div class="float-right">
+                                <button (click)="preview(contentpreview);" class="btn btn-primary-themed  btn-sm"
+                                    type="button" [disabled]="contentHtmlForm.invalid">Preview</button> &nbsp;
+                                <button type="submit" class="btn btn-danger-themed btn-sm"
+                                    [disabled]="contentHtmlForm.invalid">Publish</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <ng-template #contentpreview let-modal>
+        <div class="modal-header border-bottom-0">
+            <button type="button" class="btn btn-raised close-button topright color-black" aria-label="Close"
+              (click)="modal.dismiss('Cross click');">
+              <i class="ft-x"></i>
+            </button>
+          </div>
+        <div class="modal-body">
+            <div class="preview-container-popup">
+                <img class="preview-image-popup" src="/assets/img/gallery/iPad_Landscape.png" />
+                <div class="preview-text-outer-popup">
+                    <div class="preview-text-inner-popup">
+                        <iframe [src]="previewData.templatePath" title="Content" frameborder="0" height="100%" width="100%"></iframe>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </ng-template>
+</div>

@@ -1,0 +1,427 @@
+<div class="row mt-2">
+  <div class="col-2">
+
+    <div class="row">
+      <div class="col-3 search-title">
+        <i class="card-title icon-users font-large-1 float-left"></i>
+        <!-- <img src="../../../../assets/img/asset.png" alt="" width="40" height="40"> -->
+      </div>
+      <div class="col-9 search-title">
+        <h4 class="card-title alignleft">Users</h4>
+      </div>
+    </div>
+
+    <!-- <i class="card-title icon-users font-large-1 float-left"></i>
+    <h4 class="card-title alignleft">USERS
+      </h4> -->
+  </div>
+  <div class="col-8">
+    <input type='text' style='padding:4px; width: 100%;' #usersearch [disabled]='disableTextbox' (input)="onSearchChange($event.target.value)"
+     placeholder='Type to search..' />
+  </div>
+  <div class="col-2 text-right">
+    <!-- <button type="button" style="margin-left: 15px;"
+      class="btn btn-primary btn-round mr-1 btn-fab fixed-button alignright" placement="left"
+      ngbTooltip="Bulk user upload" (click)="openupload(contentupload,'Upload')"><span class="fa fa-arrow-up"><i
+          class="ft-user"></i></span></button> -->
+    <button type="button" class="btn btn-round mr-1 btn-fab fixed-button alignright btn-design" placement="left"
+      ngbTooltip="Create User" (click)="open(content,'Add')"><span class="icon-add-user user-icon"></span></button>
+
+    <button type="button" class="btn btn-round mr-1 btn-fab fixed-button alignright btn-design" placement="left"
+      ngbTooltip="User Role" (click)="open(UserRole,'UserRole')"><span class="icon-add-role user-icon"></span></button>
+  </div>
+</div>
+
+
+<div class="row mt-2">
+  <div class="col-12 text-right">
+    <!-- <p>Usercount- {{toalusercount }}</p> -->
+    <ng-select [(ngModel)]="filterRoleList" class="filterDesign" [multiple]="true" [clearable]="false" (change)="filterByRoleType($event)">
+      <ng-option *ngFor="let roleName of roles" [value]="roleName">{{roleName}}</ng-option>
+  </ng-select>
+
+    <i class="fa fa-filter" style="cursor: pointer;color: white"  placement="top" (click)="contentView('grid')" aria-hidden="true"></i>
+    <i class="fa fa-th faDesigns" placement="top" ngbTooltip="Grid View" (click)="contentView('grid')" aria-hidden="true"></i>
+    <i class="fa fa-list faDesigns" placement="bottom" ngbTooltip="List View"(click)="contentView('list')" aria-hidden="true"></i>
+    </div>
+</div>
+<!-- Taskboard Starts -->
+<section id="taskboard" *ngIf='taskbarView'>
+  <div class="row">
+    <div class=" col-4" *ngFor='let user of userData'>
+      <div class='' id="New">
+        <div>
+          <div class="card">
+            <div class="card-body pt-3 text-left">
+              <div class="clearfix">
+                <h4 class="float-left" style="font-weight: bold; color: black;text-transform: capitalize;">{{user.firstname}} {{user.lastname}}</h4>
+                <div class="actions float-right">
+                  <i class="ft-edit cursor-pointer mr-1 " placement="left" ngbTooltip="Edit User" (click)='EditUser(user); open(content, "Update")'></i>
+                  <i class="ft-trash-2 cursor-pointer " style="color: black;" placement="left" ngbTooltip="Delete User" (click)="confirmUserDelete(deleteUser, user)"></i>
+                </div>
+              </div>
+              <div class="userDetailsDiv">
+                <span ngbTooltip="{{user.email}}" placement="top" >{{user.email.substring(0,30)}} </span><br>
+                <span>{{user.role}}</span><br>
+                <span *ngIf="user.status == 'Active'" class="badge badge-success">{{user.status}}</span>
+                <span *ngIf="user.status != 'Active'" class="badge badge-danger">{{user.status}}</span>
+                
+              </div>
+              
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="search-results" infinite-scroll [infiniteScrollDistance]="scrollDistance"
+      [infiniteScrollUpDistance]="scrollUpDistance" [infiniteScrollThrottle]="throttle" (scrolled)="onScrollDown()">
+    </div>
+  </div>
+</section>
+<!-- Taskboard Ends -->
+
+<section id="taskboard" *ngIf='!userData.length'>
+  <div class="row">
+    <div class=" col-4">
+    </div>
+    <div class=" col-4">
+      <h4 class="ml-2 mt-2 text-bold-500 text-left"></h4>
+      <div class='dragdrop-container' id="New">
+        <div>
+          <div class="card">
+            <div class="card-body  text-center">
+              Users not found
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class=" col-4">
+    </div>
+  </div>
+</section>
+
+<section id="extended" *ngIf='!taskbarView && userData.length'>
+  <div class="row text-left">
+    <div class="col-sm-12">
+      <div class="card">
+        <div class="card-header">
+        </div>
+        <div class="card-content">
+          <div class="card-body">
+            <form>
+              <table class="table table-responsive-md text-center">
+                <thead>
+                  <tr>
+                    <th id="0">S.No</th>
+                    <th id="1" (click)="setOrder('firstname')" [ngClass]="{'active': order=='firstname'}">First Name
+                      <span [hidden]="reverse">▼</span>
+                      <span [hidden]="!reverse">▲</span>
+                    </th>
+                    <th id="2" (click)="setOrder('lastname')" [ngClass]="{'active': order=='lastname'}">Last Name
+                      <span [hidden]="reverse">▼</span>
+                      <span [hidden]="!reverse">▲</span>
+                    </th>
+                    <th id="3" (click)="setOrder('email')" [ngClass]="{'active': order=='email'}">Email
+                      <span [hidden]="reverse">▼</span>
+                      <span [hidden]="!reverse">▲</span>
+                    </th>
+                    <th id="5" (click)="setOrder('role')" [ngClass]="{'active': order=='role'}">Role
+                      <span [hidden]="reverse">▼</span>
+                      <span [hidden]="!reverse">▲</span>
+                    </th>
+                    <th id="4" (click)="setOrder('status')" [ngClass]="{'active': order=='status'}">Status
+                      <span [hidden]="reverse">▼</span>
+                      <span [hidden]="!reverse">▲</span>
+                    </th>
+                    <th id="5">Actions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let user of userData  | orderBy: order:reverse:'case-insensitive';let i= index ">
+                    <td>{{ (p - 1) * 5 + i +1 }}</td>
+                    <td style="text-transform: capitalize;">{{user.firstname}}</td>
+                    <td>{{user.lastname}}</td>
+                    <td>{{user.email}}</td>
+                    <td>{{user.role}}</td>
+                    <td>
+                      <span *ngIf="user.status == 'Active'" class="badge badge-success"> {{user.status}} </span>
+                      <span *ngIf="user.status != 'Active'" class="badge badge-danger"> {{user.status}} </span>
+                      
+                    </td>
+                    <td>
+                      <a class="success p-0" data-original-title="" title="">
+                        <i class="ft-edit-2 font-medium-3 mr-2" (click)='EditUser(user); open(content, "Update")'
+                          placement="left" ngbTooltip="Edit user"> </i>
+                      </a>
+                      <a class="danger p-0" data-original-title="" title="">
+                        <i class="ft-x font-medium-3 mr-2" (click)="confirmUserDelete(deleteUser, user)" placement="left"
+                          ngbTooltip="Delete User"></i>
+                      </a>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+              <div class="search-results" infinite-scroll [infiniteScrollDistance]="scrollDistance"
+                [infiniteScrollUpDistance]="scrollUpDistance" [infiniteScrollThrottle]="throttle"
+                (scrolled)="onScrollDown()">
+              </div>
+            </form>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<ng-template #content let-modal>
+  <form action="" class="form" [formGroup]="addUserForm">
+    <div class="modal-header">
+      <h4 class="modal-title" id="modal-basic-title" *ngIf="!update_clicked"><i class="ft-user"></i> Add User</h4>
+      <h4 class="modal-title" id="modal-basic-title" *ngIf="update_clicked"><i class="ft-user"></i> Update User</h4>
+      <button type="button" class="btn btn-raised close-button topright" (click)="closeModal('content')">
+        <i class="ft-x"></i>
+      </button>
+    </div>
+    <div class="modal-body">
+      <div class="form-body">
+        <div class="row">
+          <div class="form-group col-md-6 mb-2">
+            <label for="projectinput1">First Name</label><span style="color: red;">*</span>
+            <input type="text" id="projectinput1" class="form-control" formControlName="firstname"
+              placeholder="First Name">
+            <div class="p-1 mb-2 mt-2 text-danger"
+              *ngIf="addUserForm.controls.firstname.invalid && (addUserForm.controls.firstname.touched || save_clicked)">
+              First Name is required</div>
+          </div>
+          <div class="form-group col-md-6 mb-2">
+            <label for="projectinput2">Last Name</label><span style="color: red;">*</span>
+            <input type="text" id="projectinput2" class="form-control" formControlName="lastname"
+              placeholder="Last Name">
+            <div class="p-1 mb-2 mt-2 text-danger"
+              *ngIf="addUserForm.controls.lastname.invalid && (addUserForm.controls.lastname.touched || save_clicked)">
+              Last Name is required</div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="form-group col-md-6 mb-2">
+            <label for="projectinput3">E-mail</label><span style="color: red;">*</span>
+
+            <div class="input-group mb-3">
+              <input type="text" class="form-control" formControlName="email"
+                placeholder="E-mail" aria-label="Recipient's username" aria-describedby="basic-addon2">
+              <!-- <div class="input-group-append">
+                <span class="input-group-text" id="basic-addon2">{{tenantPreFix}}</span>
+              </div> -->
+            </div>
+            <div class="p-1 mb-2 mt-2 text-danger"
+              *ngIf="addUserForm.controls.email.invalid && addUserForm.controls.email.value == '' && (addUserForm.controls.email.touched || save_clicked)">
+              Email
+              is required</div>
+            <div class="p-1 mb-2 mt-2 text-danger" *ngIf="addUserForm.controls.email.errors?.pattern">Email
+              format mismatched</div>
+          </div>
+          <div class="form-group col-md-6 mb-2">
+            <label for="projectinput4">Mobile Number</label><span style="color: red;">*</span>
+            <input type="tel" id="projectinput4" (keypress)="numberOnly($event)" class="form-control" minLength="10"
+              maxLength="10" formControlName="mobile" placeholder="Phone" autocomplete="off">
+            <div
+              *ngIf="addUserForm.controls.mobile.invalid && (addUserForm.controls.mobile.touched || save_clicked) || addUserForm.controls.mobile.dirty">
+              <div *ngIf="addUserForm.controls.mobile.errors?.required" class="p-1 mt-2 mb-2 text-danger">Mobile is
+                required</div>
+              <div
+                *ngIf="addUserForm.controls.mobile.hasError('minlength') || addUserForm.controls.mobile.hasError('maxlength')"
+                class="p-1 mt-2 mb-2 text-danger">Mobile
+                should be 10 digit</div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="form-group col-md-6 mb-2">
+            <label for="projectinput1">Password</label><span style="color: red;">*</span>
+            <input type="password" class="form-control" formControlName="password" placeholder="Password" autocomplete="off">
+             <div class="p-1 mb-2 mt-2 text-danger"
+              *ngIf="addUserForm.controls.password.invalid && (addUserForm.controls.password.touched || save_clicked)">
+              <ul>
+                <li>Password is required</li>
+                <li>Password contain atleast one letter</li>
+                <li>Password contain atleast one capital letter</li>
+                <li>Password contain atleast one number</li>
+                <li>Password contain atleast one Special character (i.e @ # $ %) </li>
+                <li>Password contain minimum 8 character</li>
+                <li>Password contain maximum 35 character</li>
+              </ul>
+            </div>
+          </div>
+          <div class="form-group col-md-6 mb-2">
+            <label for="projectinput2">Confirm Password</label><span style="color: red;">*</span>
+            <input type="password" class="form-control" formControlName="confirmPassword"
+              placeholder="Confirm Password">
+            <div *ngIf="update_clicked && addUserForm.controls.password.value != ''">
+              <div
+                *ngIf="addUserForm.controls.confirmPassword.value == '' && (addUserForm.controls.confirmPassword.touched || save_clicked)"
+                class="p-1 mt-2 mb-2 text-danger">Confirm Password is required</div>
+              <div
+                *ngIf="addUserForm.controls.confirmPassword.invalid && addUserForm.controls.confirmPassword.value != '' &&  addUserForm.controls.confirmPassword.hasError('mismatch')"
+                class="p-1 mt-2 mb-2 text-danger">Should not matched confirm password</div>
+            </div>
+            <div *ngIf="!update_clicked">
+              <div
+                *ngIf="addUserForm.controls.confirmPassword.value == '' && (addUserForm.controls.confirmPassword.touched || save_clicked)"
+                class="p-1 mt-2 mb-2 text-danger">Confirm Password is required</div>
+              <div *ngIf="addUserForm.controls.confirmPassword.invalid && addUserForm.controls.confirmPassword.value != '' &&
+                  addUserForm.controls.confirmPassword.hasError('mismatch')" class="p-1 mt-2 mb-2 text-danger">Should
+                not matched confirm password</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="form-group col-md-6 mb-2">
+            <label for="projectinput6">Role</label><span style="color: red;">*</span>
+            <ng-select [multiple]="false" [clearable]="false" id="projectinput6" formControlName="role" class="form-control" [disabled]="butDisabled">
+              <ng-option value="" selected disabled>Select Role</ng-option>
+              <ng-option *ngFor="let item of roles" [value]= "item"> {{ item }}</ng-option>
+            </ng-select>
+            <div class="p-1 mb-2 mt-2 text-danger "
+              *ngIf="!addUserForm.controls.role.valid  &&  (addUserForm.controls.role.touched || save_clicked)">Role is
+              required
+            </div>
+          </div>
+
+          <div class="form-group col-6 mb-2">
+            <button class="btn btn-primary-themed" type="button" (click)="open(addRole, 'addRole'); this.addRoleTriggered = false;" style="margin-top: 30px;"> Add Role </button>
+          </div>
+        </div>
+        <div class="row">
+          <div class="form-group col-6 mb-2">
+            <label>Active</label><span style="color: red;">*</span>
+            <div class="input-group">
+              <div class="custom-control custom-radio d-inline-block">
+                <input type="radio" id="customRadioInline1" value="Active" formControlName="status"
+                  class="custom-control-input">
+                <label class="custom-control-label" for="customRadioInline1">Yes</label>
+              </div>
+              <div class="custom-control custom-radio d-inline-block">
+                <input type="radio" id="customRadioInline2" value="Inactive" formControlName="status"
+                  class="custom-control-input">
+                <label class="custom-control-label" for="customRadioInline2">No</label>
+              </div>
+              <div class="p-1 mb-2 mt-2 text-danger "
+                *ngIf="!addUserForm.controls.status.valid && (addUserForm.controls.status.touched || save_clicked)">
+                Status is required</div>
+
+            </div>
+          </div>
+        </div>
+      <hr>
+
+        <button type="button"  *ngIf='!buttonloading' (click)="onFormSubmit(addUserForm.value, addUserForm.valid);" class="btn btn-danger-themed">Add
+        </button>
+      </div>
+    </div>
+    
+  </form>
+</ng-template>
+
+
+<ng-template #contentupload let-modal>
+  <form action="" class="form" [formGroup]="addUserForm">
+    <div class="modal-header">
+      <h4 class="form-section modal-title" id="modal-basic-title"><i class="ft-user"></i> {{PopupName}} User</h4>
+
+      <button type="button" class="btn btn-raised mr-2" (click)="closeModal('contentupload')">
+        <i class="ft-x"></i>
+      </button>
+    </div>
+
+    <div class="modal-body">
+      <div class="form-body">
+        <div class="row">
+          <div class="form-group col-md-12 ">
+            <button class="downloadBtn" style="margin-left: 35px;margin-top: 38px;">
+              <a style="color: white;" href="https://adminpanel.sifylivewire.com:3000/user details.xlsx" target="_self">Download sample
+                format
+                <i class="fa fa-arrow-down"></i>
+
+              </a>
+            </button>
+            <label class="btn-bs-file btn choose-file-btn" style="margin-left: 50px;text-transform: capitalize;
+            letter-spacing: 0px;margin-top: 13px;">
+              <i class="fa fa-arrow-up"></i> <b style="margin-left: 5px;">Upload User</b>
+              <input style="margin-top: 30px;" type="file" accept=".xlsx,.xls,.csv"
+                (change)="onFileChange('filename',$event)">
+            </label>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div>
+
+    </div>
+
+
+
+    <div class="modal-footer">
+      <div class="form-actions top">
+      </div>
+    </div>
+  </form>
+</ng-template>
+
+<ng-template #addRole let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Add Role</h4>
+    <button type="button" id="addRoleCloseBtn" class="btn btn-raised close-button topright" aria-label="Close" (click)="this.addRoleTriggered = false; modal.dismiss('Cross click');">
+      <i class="ft-x"></i>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form [formGroup]="addRoleForm" (ngSubmit)="addRoleFormSubmit()">
+      <div class="form-group">
+        <label for="newrolename">Role Name <span style="color: red;">*</span></label>
+        <input id="newrolename" type="text" class="form-control" placeholder="Enter Role Name" formControlName="name" />
+        <div *ngIf="addRoleTriggered && addRoleFormData.name.errors">
+          <div *ngIf="addRoleFormData.name.errors.required"><label style="color:red">Enter role name</label></div>
+        </div>
+      </div>
+
+      <button type="submit" class="btn btn-danger-themed">Add</button>
+    </form>
+  </div>
+</ng-template>
+
+<ng-template #deleteUser let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Do you really want to delete the user ?</h4>
+    <button type="button" class="btn btn-raised close-button topright" aria-label="Close" (click)="modal.dismiss('Cross click');">
+      <i class="ft-x"></i>
+    </button>
+  </div>
+  <div class="modal-footer">
+    <form [formGroup]="deleteUserForm" (ngSubmit)="deleteUserFormSubmit()">
+      <div class="form-group">
+        <input type="hidden" class="form-control" formControlName="user">
+      </div>
+
+      <div>
+        <button type="submit" class="btn btn-danger-themed">Delete</button>
+        <button type="button" class="btn btn-danger-themed" aria-label="Close" (click)="modal.dismiss('Cross click');">Cancel</button>
+      </div>
+      
+    </form>
+  </div>
+</ng-template>
+
+<ng-template #UserRole let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Role Management</h4>
+    <button type="button" id="addRoleCloseBtn" class="btn btn-raised close-button topright" aria-label="Close" (click)="modal.dismiss('Cross click');">
+      <i class="ft-x"></i>
+    </button>
+  </div>
+  <div class="modal-body">
+    <app-role-management [roles]="roles" [users]="userData" (roleChangeEvent)="roleChangeEvent($event)" (userChangeEvent)="userChangeEvent($event)"></app-role-management>
+  </div>
+</ng-template>

@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: models/forgotModel.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: models/forgotModel.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
+ * forgotModel to perform forgot operations through forgot module ..
+ * @module forgot Model
+ * @see {@link forgot}
+ */
+var ObjectID = require('mongodb').ObjectID;
+var CryptoJS = require("crypto-js");
+var encryptSecretKey = 'emailvalidate'
+var crypto = require('crypto');
+var algorithm = 'aes256'; // or any other algorithm supported by OpenSSL
+var key = '789456123';
+
+module.exports = {
+
+    /**
+    * In CreateUserScenarioGroup method to create record in grouping collection After that creation to insert gcreated id in scenario and user 
+    * collection based on selected scenarios and selected users.
+    * @param  {string} collectionName Its show the collection name.
+    * @param  {string} data Its contains all group data.
+    * @return {Object} Its return success or failure message based on data insertion.
+    */
+
+    createEncryptUrl: (collectionName, data) => {
+        let db = global.db;
+        return new Promise((resolve, reject) => {
+            try {
+                let vEmailid = data
+                db.collection(collectionName).find({ username: vEmailid }).toArray((err, res) => {
+                    if (err) {
+                        reject(err)
+                    }
+                    if (res.length > 0) {
+                        var userData = res
+                        var randomCharId_data = Math.floor(Math.random() * 90000) + 10000
+                        var dataenc = [{
+                            email: res[0].email,
+                            // tenantName: res[0].tenantName,
+                            randomChar: randomCharId_data
+                        }]
+                        encryptData()
+                        function encryptData() {
+                            var cipher = crypto.createCipher(algorithm, key);
+                            var encrypted = cipher.update(JSON.stringify(dataenc), 'utf8', 'hex') + cipher.final('hex');
+                            const dataCheck = (encrypted.toString()).includes('/');
+                            if (dataCheck) {
+                                encryptData()
+                            } else {
+                                db.collection(collectionName).updateOne({ username: vEmailid }, {
+                                    $set: {
+                                        resetToken: encrypted,
+                                        user_randomChar: randomCharId_data,
+                                        forgot_verified: true,
+                                        forgotLink_verified: 0
+                                    }
+                                }, (err, res) => {
+                                    if (err) {
+                                        reject(err)
+                                    }
+                                    let result = {
+                                        success: true,
+                                        status: 200,
+                                        data: userData,
+                                        encryptDataValue: encrypted
+                                    }
+                                    resolve(result)
+                                })
+                            }
+                        }
+                    } else {
+                        let result = {
+                            success: false,
+                            status: 404,
+                            message: 'User email not found'
+                        }
+                        resolve(result)
+                    }
+                });
+            } catch (err) {
+                reject(err)
+            }
+        })
+
+    },
+
+    /**
+    * validateId method used to identify the user is valid or not.
+    * @param  {string} collectionName Its show the collection name.
+    * @param  {string} data Its contains user data.
+    * @return {Object} Its return success or failure message based on data.
+    */
+
+    validateId: (collectionName, data) => {
+        let db = global.db;
+        return new Promise((resolve, reject) => {
+            try {
+
+                var decipher = crypto.createDecipher(algorithm, key);
+                let decrypted = JSON.parse(decipher.update(data.id, 'hex', 'utf8') + decipher.final('utf8'));
+                db.collection(collectionName).find({
+                    email: decrypted[0].email,
+                    resetToken: data.id, forgot_verified: true, user_randomChar: decrypted[0].randomChar
+                }).toArray((err, datavalue) => {
+                    if (err) {
+                        reject(err)
+                    }
+                    db.collection(collectionName).updateOne({
+                        email: decrypted[0].email,
+                        resetToken: data.id, forgot_verified: true, user_randomChar: decrypted[0].randomChar, forgotLink_verified: 0
+                    }, {
+                        $set: {
+                            resetToken: null,
+                            user_randomChar: null,
+                            forgot_verified: false,
+                            forgotLink_verified: 1
+                        }
+                    }, (err, res) => {
+                        if (err) {
+                            reject(err)
+                        }
+                        resolve(datavalue)
+                    })
+                    // resolve(datavalue)
+
+                })
+            } catch (err) {
+                reject(err)
+            }
+        })
+    },
+
+    /**
+    * updatePassword method used to update the user passsword.
+    * @param  {string} collectionName Its show the collection name.
+    * @param  {string} data Its contains user data.
+    * @return {Object} Its return success or failure message based on data.
+    */
+
+
+    updatePassword: (collectionName, data) => {
+        let db = global.db;
+        return new Promise((resolve, reject) => {
+            db.collection(collectionName).updateOne({ email: data.email, forgotLink_verified: 1 }, {
+                $set: {
+                    password: data.password,
+                    forgotLink_verified: 0
+                }
+            }, (err, res) => {
+                if (err) {
+                    reject(err)
+                }
+                let result = {
+                    success: true,
+                    status: 200,
+                    message: 'Password Updated Successfull'
+                }
+                resolve(result)
+            })
+        })
+    },
+
+    /**
+    * changePasswordFirstLogin method used to update the user passsword on first time login.
+    * @param  {string} collectionName Its show the collection name.
+    * @param  {string} data Its contains user data.
+    * @return {Object} Its return success or failure message based on data.
+    */
+
+
+    changePasswordFirstLogin: (collectionName, data) => {
+        let db = global.db;
+        return new Promise((resolve, reject) => {
+            db.collection(collectionName).updateOne({ email: data.email, firstLogin: 1 }, {
+                $set: {
+                    password: data.password,
+                    firstLogin: 0
+                }
+            }, (err, res) => {
+                if (err) {
+                    reject(err)
+                }
+                let result = {
+                    success: true,
+                    status: 200,
+                    message: 'Password Updated Successfully.'
+                }
+                resolve(result)
+            })
+        })
+    },
+
+    /**
+     * profilePasswordUpdate method used to update the user profile passsword.
+     * @param  {string} collectionName Its show the collection name.
+     * @param  {string} data Its contains user data.
+     * @return {Object} Its return success or failure message based on data.
+     */
+
+
+
+    profilePasswordUpdate: (collectionName, data) => {
+        let db = global.db;
+        return new Promise((resolve, reject) => {
+            db.collection(collectionName).updateOne({ email: data.email }, {
+                $set: {
+                    password: data.password
+                }
+            }, (err, res) => {
+                if (err) {
+                    reject(err)
+                }
+                let result = {
+                    success: true,
+                    status: 200,
+                    message: 'Password Updated Successfull'
+                }
+                resolve(result)
+            })
+        })
+    }
+
+
+}</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-AdminDetails.html">AdminDetails</a></li><li><a href="module-Appconfig.html">Appconfig</a></li><li><a href="module-Asset%2520Model.html">Asset Model</a></li><li><a href="module-Assetmanage.html">Assetmanage</a></li><li><a href="module-AuthMiddleware.html">AuthMiddleware</a></li><li><a href="module-dashboard.html">dashboard</a></li><li><a href="module-DB%2520Connection.html">DB Connection</a></li><li><a href="module-ErrorLog.html">ErrorLog</a></li><li><a href="module-forgot%2520Model.html">forgot Model</a></li><li><a href="module-forgotPwd.html">forgotPwd</a></li><li><a href="module-Group.html">Group</a></li><li><a href="module-Group%2520Model.html">Group Model</a></li><li><a href="module-Register.html">Register</a></li><li><a href="module-Report.html">Report</a></li><li><a href="module-Report%2520Model.html">Report Model</a></li><li><a href="module-Scenario.html">Scenario</a></li><li><a href="module-Scenario%2520Model.html">Scenario Model</a></li><li><a href="module-ScenarioUser.html">ScenarioUser</a></li><li><a href="module-sendEmail%2520Model.html">sendEmail Model</a></li><li><a href="module-ShorturlGet.html">ShorturlGet</a></li><li><a href="module-SuperAdmin.html">SuperAdmin</a></li><li><a href="module-TenantDetails.html">TenantDetails</a></li><li><a href="module-TokenGenration.html">TokenGenration</a></li><li><a href="module-Upload.html">Upload</a></li><li><a href="module-URLShortner.html">URLShortner</a></li><li><a href="module-User.html">User</a></li><li><a href="module-User%252520Model.html">User Model</a></li><li><a href="module-WEBGL%2520Model.html">WEBGL Model</a></li></ul><h3>Global</h3><ul><li><a href="global.html#getAllAssetForUnity">getAllAssetForUnity</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.7</a> on Wed Jun 02 2021 15:41:57 GMT+0530 (India Standard Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

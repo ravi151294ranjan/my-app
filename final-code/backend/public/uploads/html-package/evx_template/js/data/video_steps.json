@@ -1,0 +1,64 @@
+{
+  "title": "Procedure",
+  "video_url": "",
+  "cc_vtt_url": "",
+  "step_title": "Drawing Water from the Patriot Facility Water Tanks",
+  "steps": [
+    {
+      "id": 1,
+      "cue": "",
+      "thumbnail_url": "",
+      "step_name": "Step 1",
+      "step": "Water Tanks Designate which tank the water/oil mixture will be pulled from."
+    },
+    {
+      "id": 2,
+      "cue": "",
+      "thumbnail_url": "",
+      "step_name": "Step 2",
+      "step": "Shut outlet ball valve and inlet butterfly (wheel) valve to chosen tank(s)."
+    },
+    {
+      "id": 3,
+      "cue": "",
+      "thumbnail_url": "",
+      "step_name": "Step 3",
+      "step": "Connect truck hose to external piping o Outside Of the process containment area. "
+    },
+    {
+      "id": 4,
+      "cue": "",
+      "thumbnail_url": "",
+      "step_name": "Step 4",
+      "step": "Once truck is connected to the water/oil draw piping, discharge (outlet) valve located at the bottom of the designated water tank and instruct driver to valve to truck. "
+    },
+    {
+      "id": 5,
+      "cue": "",
+      "thumbnail_url": "",
+      "step_name": "Step 5",
+      "step": "Verify liquid is flowing through piping and hose."
+    },
+    {
+      "id": 6,
+      "cue": "",
+      "thumbnail_url": "",
+      "step_name": "Step 6",
+      "step": "Instruct truck driver to start the truck pump to begin unloading the designated water tank."
+    },
+    {
+      "id": 7,
+      "cue": "",
+      "thumbnail_url": "",
+      "step_name": "Step 7",
+      "step": "Once the truck tank is full, the driver will shut off pump."
+    },
+    {
+      "id": 8,
+      "cue": "",
+      "thumbnail_url": "",
+      "step_name": "Step 8",
+      "step": "Once the pump is shut off. dose outlet valve on tank, valve on unloading pipe and bleed pressure from hoses before disconnecting."
+    }
+  ]
+}

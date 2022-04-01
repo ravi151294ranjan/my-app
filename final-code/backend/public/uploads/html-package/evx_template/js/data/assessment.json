@@ -1,0 +1,64 @@
+{
+  "maxQn": "5",
+  "shuffle": "false",
+  "questions": [
+    {
+      "id": "1",
+      "type": "MCQ",
+      "question": "",
+      "options": [
+        {"id": 1, "isCorrect": "false",  "opt": ""},
+        {"id": 2, "isCorrect": "false",  "opt": ""},
+        {"id": 3, "isCorrect": "false",  "opt": ""},
+        {"id": 4, "isCorrect": "false",  "opt": ""}
+      ]
+    },
+    {
+      "id": "2",
+      "type": "MMCQ",
+      "question": "",
+      "options": [
+        {"id": 1, "isCorrect": "false", "opt": ""},
+        {"id": 2, "isCorrect": "false", "opt": ""},
+        {"id": 3, "isCorrect": "false", "opt": ""},
+        {"id": 4, "isCorrect": "false", "opt": ""},
+        {"id": 5, "isCorrect": "false", "opt": ""},
+        {"id": 6, "isCorrect": "false", "opt": ""}
+      ]
+    },
+    {
+      "id": "3",
+      "type": "MMCQ",
+      "question": "",
+      "options": [
+        {"id": 1, "isCorrect": "false", "opt": ""},
+        {"id": 2, "isCorrect": "false", "opt": ""},
+        {"id": 3, "isCorrect": "false", "opt": ""},
+        {"id": 4, "isCorrect": "false", "opt": ""},
+        {"id": 5, "isCorrect": "false", "opt": ""}
+      ]
+    },
+    {
+      "id": "4",
+      "type": "MCQ",
+      "question": "",
+      "options": [
+        {"id": 1, "isCorrect": "false", "opt": ""},
+        {"id": 2, "isCorrect": "false", "opt": ""},
+        {"id": 3, "isCorrect": "false", "opt": ""},
+        {"id": 4, "isCorrect": "false", "opt": ""},
+        {"id": 5, "isCorrect": "false", "opt": ""}
+      ]
+    },
+    {
+      "id": "5",
+      "type": "MCQ",
+      "question": "",
+      "options": [
+        {"id": 1, "isCorrect": "false", "opt": ""},
+        {"id": 2, "isCorrect": "false", "opt": ""},
+        {"id": 3, "isCorrect": "false", "opt": ""}
+      ]
+    }
+  ]
+}

@@ -1,0 +1,178 @@
+<div *ngIf='!superAdminUI'>
+  <form [formGroup]="loginFormData">
+    <section id="login">
+
+      <div class="container-fluid">
+        <div class="row full-height-vh m-0">
+          <!-- <img style="margin-left: 0px;margin-top: 20px; width: 20%;height: 40px;" src="../../../../assets/img/gallery/login-client-logo.png" /> -->
+          <div class="col-12 d-flex align-items-center justify-content-center">
+
+            <span class="dot">
+              <em class="ft-user" style="font-size: 85px; margin-left: 9px; color: white;
+            "></em>
+            </span>
+
+            <div class="card">
+
+              <p class="card-text mb-3" style="
+                margin-left: 30px;
+                color: white;
+                margin-top: 28px;
+                font-size: larger;">
+                Welcome back, please login to your account.
+              </p>
+
+
+
+              <div class="input-group mb-3">
+                <p class="card-text mb-3 " style="
+                  color: white;
+                  margin-top: 3px;
+                  font-size: larger;">User ID
+                </p>
+                <div style="
+                  width: 56%;
+                  margin-left: 9%;">
+                  <input type="text" class="form-control mb-3" formControlName="username" placeholder="User ID"
+                    aria-label="Recipient's username" style="
+                    background-color: #f3eeee;color: black;" aria-describedby="basic-addon2">
+                </div>
+                <div class="input-group-append">
+                  <span style="
+                    color: white;
+                    margin-top: 3px;
+                    font-size: larger;" id="basic-addon2">{{tenantPreFix}}</span>
+                </div>
+              </div>
+
+              <div class="input-group mb-3">
+                <p class="card-text mb-3 " style="
+                color: white;
+                margin-top: 3px;
+                font-size: larger;">Password
+                </p>
+                <div style="
+              width: 56%;
+              margin-left: 5%;">
+                  <input [type]="password" class="form-control mb-3" formControlName="password" placeholder="Password"
+                    aria-label="Recipient's username" style="
+                background-color: #f3eeee;color: black;" aria-describedby="basic-addon2">
+                </div>
+
+                <div class="input-group-append">
+                  <span (click)="onClick()" style="
+                color: white;
+                margin-top: 3px;
+                font-size: larger;" id="basic-addon2">
+                    <i class="ft-eye" aria-hidden="true" *ngIf="show"></i>
+                    <i class="ft-eye-off" aria-hidden="true" *ngIf="!show"></i>
+                  </span>
+                </div>
+
+              </div>
+
+
+              <div class="fg-actions d-flex justify-content-between">
+                <div class="login-btn">
+
+
+                  <!-- <button [disabled]="!loginFormData.valid" class="btn button"
+                    (click)='onSubmit(loginFormData.value, loginFormData.valid)'>
+                    Login
+                  </button> -->
+                  <a [routerLink]="['/forgotpass']" class="text-decoration-none text-primary"
+                  style="color: white !important;">Forgot
+                  Password ?</a>
+                </div>
+                <div class="recover-pass">
+                  <!-- <button *ngIf='regBtn' class="btn button " (click)='register()'>
+                    Register
+                  </button> -->
+                  <button [disabled]="!loginFormData.valid" class="btn button"
+                  (click)='onSubmit(loginFormData.value, loginFormData.valid)'>
+                  Login
+                </button>
+                  <!-- <div class="forgot-password-option" style="margin-top: 30px;">
+                    <a [routerLink]="['/pages/forgotpass']" class="text-decoration-none text-primary"
+                      style="color: white !important;">Forgot
+                      Password ?</a>
+                  </div> -->
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </form>
+</div>
+
+
+
+
+
+
+
+
+<div *ngIf='superAdminUI'>
+  <form [formGroup]="loginFormData">
+    <section id="login">
+      <div class="container-fluid">
+        <div class="row full-height-vh m-0">
+          <div class="col-12 d-flex align-items-center justify-content-center">
+            <div class="card">
+              <div class="card-content">
+                <div class="card-body login-img">
+                  <div class="row m-0">
+                    <div class="col-lg-6 d-lg-block d-none py-2 px-3 text-center align-middle">
+                      <img src="../../assets/img/gallery/login.png" alt="" class="img-fluid mt-5" width="400"
+                        height="230" />
+                    </div>
+                    <div class="col-lg-6 col-md-12 bg-white px-4 pt-3">
+                      <h4 class="card-title mb-2">Login</h4>
+                      <p class="card-text mb-3">
+                        Welcome back, please login to your account.
+                      </p>
+
+                      <input formControlName="username" type="text" class="form-control mb-3" placeholder="Username" />
+
+
+                      <div class="p-1 mt-2 mb-2 text-danger"
+                        *ngIf="!loginFormData.controls.username.valid && (loginFormData.controls.username.touched || cfm_clicked)">
+                        User name is required
+                      </div>
+                      <input formControlName="password" type="password" class="form-control mb-3"
+                        placeholder="Password" />
+                      <div class="p-1 mt-2 mb-2 text-danger"
+                        *ngIf="!loginFormData.controls.password.valid && (loginFormData.controls.password.touched || cfm_clicked)">
+                        Password is required
+                      </div>
+                      <div class="d-flex justify-content-between mt-2">
+                        <div class="remember-me">
+                        </div>
+                      </div>
+                      <div class="fg-actions d-flex justify-content-between">
+                        <div class="login-btn">
+                          <button *ngIf='regBtn' class="btn btn-outline-primary" (click)='register()'>
+                            Register
+                          </button>
+                        </div>
+                        <div class="recover-pass">
+                          <button class="btn btn-primary" (click)='onSubmit(loginFormData.value, loginFormData.valid)'>
+                            <a class="text-decoration-none text-white">Login</a>
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </form>
+</div>

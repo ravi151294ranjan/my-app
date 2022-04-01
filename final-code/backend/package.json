@@ -1,0 +1,52 @@
+{
+  "name": "express-generator",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "start": "nodemon ./bin/https-server.js",
+    "start-https-server": "sudo pm2 start --name=EVX_HTTPS_SERVER ./bin/https-server.js",
+    "start-http-server": "sudo pm2 start --name=EVX_HTTP_SERVER ./bin/http-server.js",
+    "generate-docs": "jsdoc -c conf.json"
+  },
+  "dependencies": {
+    "aws-sdk": "^2.963.0",
+    "axios": "^0.21.1",
+    "blob": "^0.1.0",
+    "config": "^3.3.6",
+    "cookie-parser": "^1.4.5",
+    "cors": "^2.8.5",
+    "crypto-js": "^4.1.1",
+    "debug": "^4.3.2",
+    "dotenv": "^8.6.0",
+    "express": "~4.16.1",
+    "express-session": "^1.17.2",
+    "express-socket.io-session": "^1.3.5",
+    "fs-extra": "^9.1.0",
+    "http-errors": "~1.6.3",
+    "jsdoc": "^3.6.7",
+    "jsonwebtoken": "^8.5.1",
+    "mongodb": "^3.6.11",
+    "mongoose": "^5.13.5",
+    "morgan": "~1.9.1",
+    "multer": "^1.4.2",
+    "nodemailer": "^6.6.3",
+    "pug": "^3.0.2",
+    "q": "^1.5.1",
+    "query-string": "^6.14.1",
+    "rand-token": "^1.0.1",
+    "request": "^2.88.2",
+    "request-promise": "^4.2.6",
+    "shortid": "^2.2.16",
+    "socket.io": "^4.1.3",
+    "socket.io-stream": "^0.9.1",
+    "socketio-jwt": "^4.6.2",
+    "superagent": "^6.1.0",
+    "util": "^0.12.4",
+    "valid-url": "^1.0.9",
+    "vhost": "^3.0.2",
+    "web-push": "^3.4.5"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.12"
+  }
+}
